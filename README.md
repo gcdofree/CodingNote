@@ -42,15 +42,15 @@
 * 每次处理判断条件时，都会造成重复计算
 * 以vector为例，每次计算begin(), end(), size()都是比较耗时的操作，所以在循环中尽量避免
 	
-	`vector<int> v;
-	for(vector<int>::iterator iter = v.begin(); iter != v.end(); ++iter);
-	for(int i = 0; i < v.size(); ++i);
-	// 替换成如下代码
-	vector<int> v;
-	vector<int>::iterator iter_end = v.end(); // 提前计算好v.end()
-	for(vector<int>::iterator iter = v.begin(); iter != iter_end; ++iter);
-	int size = v.size(); // 提前计算好v.size()
-	for(int i = 0; i < size; ++i);`
+	`vector<int> v;`
+	`for(vector<int>::iterator iter = v.begin(); iter != v.end(); ++iter);`
+	`for(int i = 0; i < v.size(); ++i);`
+	`// 替换成如下代码`
+	`vector<int> v;`
+	`vector<int>::iterator iter_end = v.end(); // 提前计算好v.end()`
+	`for(vector<int>::iterator iter = v.begin(); iter != iter_end; ++iter);`
+	`int size = v.size(); // 提前计算好v.size()`
+	`for(int i = 0; i < size; ++i);`
 
 * 在循环中执行不发生变化的部分，确保提取到循环外部，减少循环内部的计算量
 
