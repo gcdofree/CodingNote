@@ -57,3 +57,9 @@
 #### 通过引用传递结构体而不是传值（使用&vector而不是vector）
 #### 使用类初始化列表Color::Color() : r(0), g(0), b(0) {}，而不是初始化函数Color::Color() { r= g = b = 0; }
 #### Switch语句中根据发生频率来进行case排序，最频繁使用的放在最前
+#### C++中，string可以按照数组的样式进行操作，也有运算符重载
+	
+	string temp = "asdf";
+	cout << temp[2]; // 输出"d"
+	temp += temp;
+	cout << temp; // 输出"asdfasdf"
