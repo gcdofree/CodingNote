@@ -26,3 +26,54 @@
 
 #### 快速排序 Quick Sort
 平均时间复杂度O(nlogn)，最坏情况（已经从小到大排好序的数组）是O(n^2)，空间复杂度O(1)
+快排的实现：Hoare版本，在partition函数中从两侧双向至中间扫描
+
+int partition (int A [], int start , int end)
+{
+      int pivotValue = A [start];
+      int left = start -1 ;
+      int right = end +1 ;
+
+      while ( true )
+      {
+            //双向扫描
+            do
+            {
+                 right --;
+            } while (A [right] > pivotValue );
+
+            do
+            {
+                 left ++;
+            } while (A [left] < pivotValue );
+
+            if ( left < right)
+            {
+                 int temp = A [left];
+                 A [left] = A[ right];
+                 A [right] = temp;
+            }
+            else
+            {
+                 return right ;
+            }
+      }
+}
+
+void quickSort (int A [], int start , int end)
+{
+      int pivot ;
+      if ( start < end)
+      {
+            pivot = partition( A , start , end );
+            quickSort (A , start , pivot );
+            quickSort (A , pivot + 1 , end );
+      }
+}
+
+int main()
+{
+      int test [] = {...};
+      quickSort (test , 0 , N-1 );
+      return 0 ;
+}
