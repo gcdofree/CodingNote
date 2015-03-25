@@ -77,3 +77,10 @@
 		quickSort (test , 0 , N-1 );
 		return 0 ;
 	}
+
+#### 查找数组中的元素时，可以先排序，再用二分查找
+#### C++有stl自带的sort方法（快排），可以自定义判断规则，需要引入头文件<algorithm>，a在b前时，返回true
+
+static bool comp( int a , int b) {
+      return a < b ;
+}

@@ -63,3 +63,5 @@
 	cout << temp[2]; // 输出"d"
 	temp += temp;
 	cout << temp; // 输出"asdfasdf"
+
+#### 内存对齐，char 1字节，short 2字节，int 4字节，long 4字节，float 4字节，double 8字节。对齐时以最大的元素长度基准，进行对齐，所以总大小一定是最大元素长度的倍数
