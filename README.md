@@ -7,23 +7,23 @@
 * 使用位运算代替整数的乘法（左移）和除法（右移）
 * 如果需要乘以或除以2n，都可以用移位的方法代替
 
-	`int a1 = 3;
-	`int a2 = a1 * 2; // a2 = a1 << 1;
-	`int a3 = a1 / 2; // a2 = a1 >> 1;
+		int a1 = 3;
+		int a2 = a1 * 2; // a2 = a1 << 1;
+		int a3 = a1 / 2; // a2 = a1 >> 1;
 
 * 使用位运算代替整数的取模（与运算）
 * 如果需要和2n取模，都可以用与运算的方法代替
 
-	`int a1 = 3;
-	`int a2 = a1 % 4; // a2 = a1 & 3;
+		int a1 = 3;
+		int a2 = a1 % 4; // a2 = a1 & 3;
 	
 ## 字符串 String
 * C++中，string可以按照数组的样式进行操作，也有运算符重载
 	
-	`string temp = "asdf";
-	`cout << temp[2]; // 输出"d"
-	`temp += temp;
-	`cout << temp; // 输出"asdfasdf"
+		string temp = "asdf";
+		cout << temp[2]; // 输出"d"
+		temp += temp;
+		cout << temp; // 输出"asdfasdf"
 
 * 两个string比较大小，是从第一位开始逐个比较，"123" > "122"
 * string是分配堆中的空间，所以sizeof(string)返回的是一个固定值，和编译器有关
@@ -42,24 +42,24 @@
 * 内存对齐，char 1字节，short 2字节，int 4字节，long 4字节，float 4字节，double 8字节。对齐时以最大的元素长度基准，进行对齐，所以总大小一定是最大元素长度的倍数
 * 函数前面加const表明返回值不能修改，后面加const表明该方法只能读取类的成员变量，不能修改成员变量
 	
-	`int GetY() const {
-	`	return yVal;
-	`}
-	`void SetY (int value) {
-	`	y = value;
-	`}
+		int GetY() const {
+			return yVal;
+		}
+		void SetY (int value) {
+			y = value;
+		}
 	
 * C++ 初始化类成员时，是按照声明的顺序初始化的，而不是按照出现在初始化列表中的顺序
 	
-	`class CMyClass {
-	`	CMyClass(int x, int y);
-	`	int m_x;
-	`	int m_y;
-	`};
+		class CMyClass {
+			CMyClass(int x, int y);
+			int m_x;
+			int m_y;
+		};
 
-	`CMyClass::CMyClass(int x, int y) : m_y(y), m_x(m_y)
-	`{
-	`}
+		CMyClass::CMyClass(int x, int y) : m_y(y), m_x(m_y)
+		{
+		}
 	
 初始化顺序并不是m_y=y，然后做m_x=m_y，最后它们有相同的值。编译器先初始化m_x，然后是m_y,，因为它们是按这样的顺序声明的。结果是m_x将有一个不可预测的值
 
