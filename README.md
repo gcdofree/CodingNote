@@ -59,18 +59,22 @@
 
 		CMyClass::CMyClass(int x, int y) : m_y(y), m_x(m_y)
 		{
+			...
 		}
 	
-初始化顺序并不是m_y=y，然后做m_x=m_y，最后它们有相同的值。编译器先初始化m_x，然后是m_y,，因为它们是按这样的顺序声明的。结果是m_x将有一个不可预测的值
+		初始化顺序并不是m_y=y，然后做m_x=m_y，最后它们有相同的值。编译器先初始化m_x，然后是m_y,，因为它们是按这样的顺序声明的。结果是m_x将有一个不可预测的值
+
+* 通过引用传递结构体而不是传值（使用&vector而不是vector）
+* 使用类初始化列表Color::Color() : r(0), g(0), b(0) {}，而不是初始化函数Color::Color() { r= g = b = 0; }
 
 ## 其他 Other
 #### if条件中对整数的判断 if(a)
 遵从的原则是非0即为真
 	
-	int a1 = 2, a2 = 0, a3 = -2;
-	if(a1) // 返回true
-	if(a2) // 返回false
-	if(a3) // 返回true
+		int a1 = 2, a2 = 0, a3 = -2;
+		if(a1) // 返回true
+		if(a2) // 返回false
+		if(a3) // 返回true
 
 #### 避免不必要的除法
 * 加法和减法，速度快于乘法和除法
@@ -78,29 +82,26 @@
 
 #### 对大多数类，优先使用+= 、 -= 、 *= 和 /=，而不是使用+ 、 - 、 * 、 和/
 	
-	int a = b + c + e; // int a; a += b; a += c; a += e;
+		int a = b + c + e; // int a; a += b; a += c; a += e;
 
 #### 对于对象，使用前缀操作符（++obj），而不是后缀操作符（obj++）
 * 使用后缀操作符需要执行一次对象拷贝（这也导致了额外的构造和析构函数调用），而前缀的构造函数不需要一个临时的拷贝。
 * 尤其在循环中，包括迭代器iterator
 
-	`for(; ; ++iter);`
+		for(; ; ++iter);
 
 #### 对于循环，可以提前计算好判断循环终止条件的变量
 * 每次处理判断条件时，都会造成重复计算
 * 以vector为例，每次计算begin(), end(), size()都是比较耗时的操作，所以在循环中尽量避免
-	
-	`vector<int> v;`  
-	`for(vector<int>::iterator iter = v.begin(); iter != v.end(); ++iter);`  
-	`for(int i = 0; i < v.size(); ++i);`  
-	`// 替换成如下代码`  
-	`vector<int> v;`  
-	`vector<int>::iterator iter_end = v.end(); // 提前计算好v.end()`  
-	`for(vector<int>::iterator iter = v.begin(); iter != iter_end; ++iter);`  
-	`int size = v.size(); // 提前计算好v.size()`  
-	`for(int i = 0; i < size; ++i);`
+
+		vector<int> v;
+		for(vector<int>::iterator iter = v.begin(); iter != v.end(); ++iter);
+		for(int i = 0; i < v.size(); ++i);
+		// 替换成如下代码  
+		vector<int> v;  
+		vector<int>::iterator iter_end = v.end(); // 提前计算好v.end() 
+		for(vector<int>::iterator iter = v.begin(); iter != iter_end; ++iter); 
+		int size = v.size(); // 提前计算好v.size()
+		for(int i = 0; i < size; ++i);
 
 * 在循环中执行不发生变化的部分，确保提取到循环外部，减少循环内部的计算量
-
-#### 通过引用传递结构体而不是传值（使用&vector而不是vector）
-#### 使用类初始化列表Color::Color() : r(0), g(0), b(0) {}，而不是初始化函数Color::Color() { r= g = b = 0; }
