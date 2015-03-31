@@ -41,6 +41,7 @@
 * Switch语句中根据发生频率来进行case排序，最频繁使用的放在最前
 * 内存对齐，char 1字节，short 2字节，int 4字节，long 4字节，float 4字节，double 8字节。对齐时以最大的元素长度基准，进行对齐，所以总大小一定是最大元素长度的倍数
 * 函数前面加const表明返回值不能修改，后面加const表明该方法只能读取类的成员变量，不能修改成员变量
+	
 	int GetY() const {
 		return yVal;
 	}
@@ -49,6 +50,7 @@
 	}
 	
 * C++ 初始化类成员时，是按照声明的顺序初始化的，而不是按照出现在初始化列表中的顺序
+	
 	class CMyClass {
 		CMyClass(int x, int y);
 		int m_x;
@@ -58,6 +60,7 @@
 	CMyClass::CMyClass(int x, int y) : m_y(y), m_x(m_y)
 	{
 	}
+	
 初始化顺序并不是m_y=y，然后做m_x=m_y，最后它们有相同的值。编译器先初始化m_x，然后是m_y,，因为它们是按这样的顺序声明的。结果是m_x将有一个不可预测的值
 
 ## 其他 Other
