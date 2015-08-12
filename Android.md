@@ -97,3 +97,10 @@ startActivity是系统方法，其中intent用来在不同的activity之间通�
 *   fragment存放在backStack中，通过popBackStack方法出栈
 *   FragmentTransaction，包含add, remove,  replace方法操作fragment，最后调用commit，commit并不是立即执行，而是把事务transaction加入到对应activity的UI线程队列中
 *   fragment生命周期：onAttach, onCreate, onCreateView, onActivityCreated，与托管的activity状态一致，onDestroyView, onDestroy, onDetach
+
+#### Android中存储，读写相关
+Sharedpreferences 进行保存时，commit是同步写到存储介质上，并返回true or false；apply是异步写到存储介质上，无返回值，效率比commit高
+
+#### Android中消息提示相关
+Toast 无法自定义duration，只能是LENGTH_SHORT或者LENGTH_LONG
+
