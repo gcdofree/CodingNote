@@ -36,8 +36,8 @@ Android开发整理
 #### Android系统知识
 Android开机加电引导流程，分为6个步骤
 *   Boot ROM: 引导boot媒介寻找boot loader的第一阶段，找到后开始执行boot loader
-*   Boot Loader: 区别于linux内核程序，用于初始化内存并将linux内核装载到内存中
-*   Kernel: linux内核程序用于初始化硬件驱动，内存管理（虚拟内存）
+*   Boot Loader: 区别于Linux内核程序，用于初始化内存并将Linux内核装载到内存中
+*   Kernel: Linux内核程序用于初始化硬件驱动，内存管理（虚拟内存）
 *   Init: 初始化进程，文件系统
 *   Zygote: 初始化并运行Dalvik虚拟机
 *   System Service: 启动所有的android系统服务，如电话，蓝牙，wifi
