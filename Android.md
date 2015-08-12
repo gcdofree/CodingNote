@@ -30,5 +30,17 @@ Android开发整理
 *   9.png（适用于图片的缩放） WebP（Android 4.0之后原生支持，比png图片的无损压缩率更高）
 *   多使用lint工具优化代码
 *   如果Android程序（包含资源）需要导出jar包，可以首先生成apk，然后把apk复制到assets文件夹下（仅保留apk中的res文件夹和AndroidManifest），然后再打包（打包时不包含res文件夹）
+*   dp 密度无关像素，无论屏幕密度如何，都可以得到同样尺寸；sp 缩放无关像素，常用于字体大小（和系统设置的字体大小一致）
+*   Android中调用外部动态链接库（.so文件, shared object）时，方法为System.loadLibrary("test") 对应查找的文件为libtest.so
+
+#### Android系统知识
+Android开机加电引导流程，分为6个步骤
+*   Boot ROM: 引导boot媒介寻找boot loader的第一阶段，找到后开始执行boot loader
+*   Boot Loader: 区别于linux内核程序，用于初始化内存并将linux内核装载到内存中
+*   Kernel: linux内核程序用于初始化硬件驱动，内存管理（虚拟内存）
+*   Init: 初始化进程，文件系统
+*   Zygote: 初始化并运行Dalvik虚拟机
+*   System Service: 启动所有的android系统服务，如电话，蓝牙，wifi
+
 
 
