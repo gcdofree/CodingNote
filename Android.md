@@ -47,7 +47,13 @@ Dalvik虚拟机和Java虚拟机的区别
 *   指令集：Dalvik的指令集是基于寄存器的，而JVM是基于栈的。基于栈的指令集比较紧凑，指令集较短；基于寄存器的指令集比较长。如JVM的指令只占一个字节，所以是字节码。执行同样的功能，基于栈的需要执行更多指令，而基于寄存器的需要更多指令空间。更多的指令意味着更长的占用CPU时间，更多的指令空间意味着缓存容易失效
 
 #### Android界面、布局相关
-
+*   五大布局: FrameLayout（所有空间堆叠到左上角，适用于layout中只有一个view），LinearLayout（线性布局），AbsoluteLayout（绝对布局），RelativeLayout（相对布局），TableLayout（表格布局）
+*   ListView调用Adaptor的getView方法获取每个子项item视图
+*   LinearLayout中的layout_weight作用于剩余空间extra space，根据组件的weight比例进行分配
+ 
+        // 假设在一个LinearLayout中有两个view，各自的width为w1、w2，parent的width为w
+        layout_width = "0dp"; // 此时w1=w2=0，剩余空间是w，如果weight比是1:2，实际width比例是w1:w2 = (0+1/3):(0+2/3) = 1:2
+        layout_width = "match_parent"; // 此时w1=w2=w，剩余空间是-w，如果weight比是1:2，实际width比例是w1:w2 = (1-1/3):(1-2/3) = 2:1
 
 #### Android 相机、Bitmap、Canvas绘制相关
 *   Android拍照
