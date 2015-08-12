@@ -8,28 +8,28 @@ Android开发整理
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
     <!-- 这个权限用于访问GPS定位-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <!-- 用于访问wifi网络信息-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <!-- 获取运营商信息-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <!-- 这个权限用于获取wifi的获取权限-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
     <!-- 用于读取手机当前的状态-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+    <!-- 向扩展卡写入数据-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <!-- 访问网络，网络定位需要上网-->
+    <!-- 访问网络-->
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <!—SD卡读取权限，用户写入离线定位数据-->
+    <!—SD卡读取权限-->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
     <!--允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
 
 #### Android开发tips
-*   Android Support Library 是保证高版本的SDK在开发时的向下兼容性，比如4.x的Fragment可以用在1.6的版本上。常用版本是Android Support v4（照顾1.6及以上版本，eclipse中默认带有）
+*   Android Support Library 是保证高版本的SDK在开发时的向下兼容性，比如4.x的Fragment可以用在1.6的版本上。常用版本是Android       Support v4（照顾1.6及以上版本，eclipse中默认带有）
 *   9.png（适用于图片的缩放） WebP（Android 4.0之后原生支持，比png图片的无损压缩率更高）
 *   多使用lint工具优化代码
-*   如果Android程序（包含资源）需要导出jar包，可以首先生成apk，然后把apk复制到assets文件夹下（仅保留apk中的res文件夹和AndroidManifest），然后再打包（打包时不包含res文件夹）
+*   如果Android程序（包含资源）需要导出jar包，可以首先生成apk，然后把apk复制到assets文件夹下（仅保留apk中的res文件夹和Android     Manifest），然后再打包（打包时不包含res文件夹）
 *   dp 密度无关像素，无论屏幕密度如何，都可以得到同样尺寸；sp 缩放无关像素，常用于字体大小（和系统设置的字体大小一致）
 *   Android中调用外部动态链接库（.so文件, shared object）时，方法为System.loadLibrary("test") 对应查找的文件为libtest.so
 
@@ -43,20 +43,20 @@ Android开机加电引导流程，分为6个步骤
 *   System Service: 启动所有的Android系统服务，如电话，蓝牙，wifi
 
 Dalvik虚拟机和Java虚拟机的区别
-*   文件类型：Dalvik使用的是dex文件，JVM是class文件。一个dex文件可以包含多个类，而class只含有一个类，所以可以对重复出现的字符串和常数只保存一次，节省空间，适用于内存和处理器性能有限的手机上。用DX工具可以把多个class编译为dex
-*   指令集：Dalvik的指令集是基于寄存器的，而JVM是基于栈的。基于栈的指令集比较紧凑，指令集较短；基于寄存器的指令集比较长。如JVM的指令只占一个字节，所以是字节码。执行同样的功能，基于栈的需要执行更多指令，而基于寄存器的需要更多指令空间。更多的指令意味着更长的占用CPU时间，更多的指令空间意味着缓存容易失效
+*   文件类型：Dalvik使用的是dex文件，JVM是class文件。一个dex文件可以包含多个类，而class只含有一个类，所以可以对重复出现的字符     串和常数只保存一次，节省空间，适用于内存和处理器性能有限的手机上。用DX工具可以把多个class编译为dex
+*   指令集：Dalvik的指令集是基于寄存器的，而JVM是基于栈的。基于栈的指令集比较紧凑，指令集较短；基于寄存器的指令集比较长。如JV     M的指令只占一个字节，所以是字节码。执行同样的功能，基于栈的需要执行更多指令，而基于寄存器的需要更多指令空间。更多的指令意     味着更长的占用CPU时间，更多的指令空间意味着缓存容易失效
 
 #### Android界面、布局相关
-*   五大布局: FrameLayout（所有空间堆叠到左上角，适用于layout中只有一个view），LinearLayout（线性布局），AbsoluteLayout（绝对布局），RelativeLayout（相对布局），TableLayout（表格布局）
+*   五大布局: FrameLayout（所有空间堆叠到左上角，适用于layout中只有一个view），LinearLayout（线性布局），AbsoluteLayout（绝对     布局），RelativeLayout（相对布局），TableLayout（表格布局）
 *   ListView调用Adaptor的getView方法获取每个子项item视图
 *   LinearLayout中的layout_weight作用于剩余空间extra space，根据组件的weight比例进行分配
  
         // 假设在一个LinearLayout中有两个view，各自的width为w1、w2，parent的width为w
         layout_width = "0dp"; // 此时w1=w2=0，剩余空间是w，如果weight比是1:2，实际width比例是w1:w2 = (0+1/3):(0+2/3) = 1:2
         layout_width = "match_parent"; // 此时w1=w2=w，剩余空间是-w，如果weight比是1:2，实际width比例是w1:w2 = (1-1/3):(1-2/3) = 2:1
-*   在旋转屏幕后，会将当前的activity销毁，然后重新生成，需要重写onSaveInstanceState(Bundle)方法，保存临时数据；旋转之后，系统默认会调用layout-land中的同名layout文件
+*   在旋转屏幕后，会将当前的activity销毁，然后重新生成，需要重写onSaveInstanceState(Bundle)方法，保存临时数据；旋转之后，系统     默认会调用layout-land中的同名layout文件
 
-#### Android 相机、Bitmap、Canvas绘制相关
+#### Android相机、Bitmap、Canvas绘制相关
 *   Android拍照
 
         Camera.takePicture(ShutterCallback, PictureCallbackRaw, PictureCallbackJpeg); 
@@ -78,5 +78,11 @@ Dalvik虚拟机和Java虚拟机的区别
         // 图片使用完成后，调用recycle回收资源
         bitmap.recycle();
         
-        
+#### Android中Activity相关
+Activity四种启动模式：standard（每次启用新的实例）, singleTop（如果在栈顶，则复用；否则启用新的实例）, singleTask, singleInstance
+
+*   任务Task是一系列相关的Activity组成
+    
+*   启动singleTask模式的Activity时，会在系统中搜寻是否已经存在一个合适的任务，若存在，则会将这个任务调度到前台以重用这个任务     。如果这个任务中已经存在一个要启动的Activity的实例，则清除这个实例之上的所有Activity，将这个实例显示给用户。如果这个已存     在的任务中不存在一个要启动的Activity的实例，则在这个任务的顶端启动一个实例。若这个任务不存在，则会启动一个新的任务，在这     个新的任务中启动这个singleTask模式的Activity的一个实例
+*   启动singleInstance的Activity时，会在系统中搜寻是否已经存在一个这个Activity的实例，如果存在，会将这个实例所在的任务调度到     前台，重用这个Activity的实例（该任务中只有这一个Activity），如果不存在，会开启一个新任务，并在这个新任务中启动这个singleI     nstance模式的Activity的一个实例，独占这个task
 
