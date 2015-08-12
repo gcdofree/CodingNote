@@ -54,6 +54,7 @@ Dalvik虚拟机和Java虚拟机的区别
         // 假设在一个LinearLayout中有两个view，各自的width为w1、w2，parent的width为w
         layout_width = "0dp"; // 此时w1=w2=0，剩余空间是w，如果weight比是1:2，实际width比例是w1:w2 = (0+1/3):(0+2/3) = 1:2
         layout_width = "match_parent"; // 此时w1=w2=w，剩余空间是-w，如果weight比是1:2，实际width比例是w1:w2 = (1-1/3):(1-2/3) = 2:1
+*   在旋转屏幕后，会将当前的activity销毁，然后重新生成，需要重写onSaveInstanceState(Bundle)方法，保存临时数据；旋转之后，系统默认会调用layout-land中的同名layout文件
 
 #### Android 相机、Bitmap、Canvas绘制相关
 *   Android拍照
