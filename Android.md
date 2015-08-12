@@ -86,3 +86,14 @@ Activity四种启动模式：standard（每次启用新的实例）, singleTop�
 *   启动singleTask模式的Activity时，会在系统中搜寻是否已经存在一个合适的任务，若存在，则会将这个任务调度到前台以重用这个任务     。如果这个任务中已经存在一个要启动的Activity的实例，则清除这个实例之上的所有Activity，将这个实例显示给用户。如果这个已存     在的任务中不存在一个要启动的Activity的实例，则在这个任务的顶端启动一个实例。若这个任务不存在，则会启动一个新的任务，在这     个新的任务中启动这个singleTask模式的Activity的一个实例
 *   启动singleInstance的Activity时，会在系统中搜寻是否已经存在一个这个Activity的实例，如果存在，会将这个实例所在的任务调度到     前台，重用这个Activity的实例（该任务中只有这一个Activity），如果不存在，会开启一个新任务，并在这个新任务中启动这个singleI     nstance模式的Activity的一个实例，独占这个task
 
+startActivity是系统方法，其中intent用来在不同的activity之间通信：在父activity中，有startActivityForResult和onActivityResult；在子activity中，有setResult方法
+
+在activity中使用fragment
+*   需要在布局中为fragment视图安排位置，同时还需要管理fragment实例的生命周期（由托管的activity控制，而不是系统）
+*   fragment有onCreate是public，而activity是protected
+*   fragment初始化视图的方法是onCreateView，用inflator去加载layout文件
+*   FragmentManager: 用来管理fragment队列和fragment事务，获取方法是getFragmentManager()
+*   通过findFragmentByID或者findFragmentByTag来获取fragment
+*   fragment存放在backStack中，通过popBackStack方法出栈
+*   FragmentTransaction，包含add, remove,  replace方法操作fragment，最后调用commit，commit并不是立即执行，而是把事务transaction加入到对应activity的UI线程队列中
+*   fragment生命周期：onAttach, onCreate, onCreateView, onActivityCreated，与托管的activity状态一致，onDestroyView, onDestroy, onDetach
