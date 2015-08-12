@@ -46,6 +46,30 @@ Dalvik虚拟机和Java虚拟机的区别
 *   文件类型：Dalvik使用的是dex文件，JVM是class文件。一个dex文件可以包含多个类，而class只含有一个类，所以可以对重复出现的字符串和常数只保存一次，节省空间，适用于内存和处理器性能有限的手机上。用DX工具可以把多个class编译为dex
 *   指令集：Dalvik的指令集是基于寄存器的，而JVM是基于栈的。基于栈的指令集比较紧凑，指令集较短；基于寄存器的指令集比较长。如JVM的指令只占一个字节，所以是字节码。执行同样的功能，基于栈的需要执行更多指令，而基于寄存器的需要更多指令空间。更多的指令意味着更长的占用CPU时间，更多的指令空间意味着缓存容易失效
 
+#### Android界面、布局相关
 
 
+#### Android 相机、Bitmap、Canvas绘制相关
+*   Android拍照
+
+        Camera.takePicture(ShutterCallback, PictureCallbackRaw, PictureCallbackJpeg); 
+        Camera.parameters.setPictureSize(w, h); // 设置照片尺寸
+*   Bitmap相关操作
+
+        // 生成bitmap的四种方式
+        Bitmap bitmap = null;
+        bitmap = BitmapFactory.decodeByteArray(data, offset, length, options);
+        bitmap = BitmapFactory.decodeFile(path, options);
+        bitmap = BitmapFactory.decodeResource(res, id, options);
+        bitmap = BitmapFactory.decodeStream(is, outPadding, options);
+        // 仅获取图片的width和height，而不将图片载入内存，不会生成bitmap，返回null
+        options.inJustDecodeBounds = true;
+        // 获取一个缩略图，节省内存，可用于显示小图的模式
+        options.inSampleSize = 2; // 2000*1000 -> 1000*500用于获取一个缩略图片
+        // 根据已有bitmap进行scale
+        createScaledBitmap(Bitmap src, int dstWidth, int dstHeight, boolean filter);
+        // 图片使用完成后，调用recycle回收资源
+        bitmap.recycle();
+        
+        
 
