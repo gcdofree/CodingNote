@@ -19,9 +19,16 @@ Android开发整理
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <!-- 访问网络，网络定位需要上网-->
-    <uses-permission android:name="android.permission.INTERNET" /></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <!—SD卡读取权限，用户写入离线定位数据-->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
     <!--允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
+
+#### Android开发tips
+*   Android Support Library 是保证高版本的SDK在开发时的向下兼容性，比如4.x的Fragment可以用在1.6的版本上。常用版本是Android Support v4（照顾1.6及以上版本，eclipse中默认带有）
+*   9.png（适用于图片的缩放） WebP（Android 4.0之后原生支持，比png图片的无损压缩率更高）
+*   多使用lint工具优化代码
+*   如果Android程序（包含资源）需要导出jar包，可以首先生成apk，然后把apk复制到assets文件夹下（仅保留apk中的res文件夹和AndroidManifest），然后再打包（打包时不包含res文件夹）
+
 
