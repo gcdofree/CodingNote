@@ -29,3 +29,5 @@ There are a row of houses, each house can be painted with three colors red, blue
 	        int min = Math.min(Math.min(f[n][0], f[n][1]), f[n][2]);
 	        return min;
         }
+
+---
