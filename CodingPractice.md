@@ -64,6 +64,7 @@ Practice Round
 	int top;
 	vector<int> g[1000];
 
+	// 将string映射到数字，方便后续的DFS操作
 	int getid(const string & s) {
 		if (mp.count(s)) {
 			return mp[s];
@@ -72,6 +73,7 @@ Practice Round
 		}
 	}
 
+	// 添加双向边
 	void addEdge(int a, int b) {
 		g[a].push_back(b);
 		g[b].push_back(a);
@@ -80,6 +82,7 @@ Practice Round
 	bool ans;
 	vector<int> vis;
 
+	// DFS搜索，一个节点如果标记为1类，则他的children标记为2类
 	void dfs(int s, int color) {
 		if (vis[s] == 0) {
 			vis[s] = color;
@@ -91,6 +94,7 @@ Practice Round
 				}
 			}
 		} else if (vis[s] != color) {
+			// 如果类标不符，说明找到环路
 			ans = false;
 		}
 	}
@@ -112,6 +116,7 @@ Practice Round
 				g[i].clear();
 			}
 			string s, t;
+			// 初始化无向图
 			for (int i = 0; i < n; i++) {
 				inputFile >> s >> t;
 				addEdge(getid(s), getid(t));
