@@ -31,3 +31,16 @@ There are a row of houses, each house can be painted with three colors red, blue
         }
 
 ---
+
+#### Google Code Jam
+
+Tips: 
+*	Code Jam 里面的题目需要读写操作（输入数据从文件中读取，输出数据写入到文件中），可以提前准备好程序模板，包括#include的常用文件，main函数，IO操作等
+*	一些常用的算法可以事先写好，如DFS，BFS等
+
+---
+
+##### Google APAC 2016 University Graduates Test
+
+Practice Round
+
