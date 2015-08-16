@@ -142,4 +142,94 @@ Practice Round
 	
 ---
 
+*	Name: Captain Hammer
+*	Problem: 给出初始速度大小和飞行的距离，求初始飞行角度。这里只考虑重力的影响，不受空气摩擦力。
+*	Link: https://code.google.com/codejam/contest/6234486/dashboard#s=p1
 
+思路：解对应的物理方程即可，注意越界（int连续相乘可能越界，考虑使用long long）和精度问题（题目要求精确到小数点后7位）。
+
+代码
+
+	#include <iostream>
+	#include <fstream>
+	#include <algorithm>
+
+	#define PI 3.14159265
+
+	using namespace std;
+	
+	int main() {
+    	// open file
+    	ifstream inputFile("B-small-attempt1.in");
+    	ofstream outputFile("output");
+    	outputFile.precision(8);
+    	int caseNum;
+    	inputFile >> caseNum;
+    	for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+        	int speed, distance;
+        	inputFile >> speed >> distance;
+        	long long distanceD = (long long)distance;
+        	distanceD = distanceD * distanceD;
+        	long long speedL = (long long)speed;
+        	speedL = speedL * speedL * speedL * speedL * 4;
+        	double disTemp = 9.8 * 9.8 * distanceD;
+        	double temp = abs(0.25 - disTemp / speedL);
+        	temp = 0.5 - sqrt(temp);
+        	double angle = 90.0 - acos(sqrt(temp)) * 180.0 / PI;
+        	// output result
+        	outputFile << "Case #" << caseIndex << ": " << angle << endl;
+    	}
+    	inputFile.close();
+    	outputFile.close();
+    	return 0;
+	}
+
+---
+
+*	Name: Moist
+*	Problem: 给出一个卡片组，要求计算用插入排序时，移动当前卡片的次数（一次排序只算一次）
+*	Link: https://code.google.com/codejam/contest/6234486/dashboard#s=p2
+
+思路：这里并不需要实现一个插入排序算法，只需要记录上一个卡片的名字即可。另外，C++中字符串的比较默认是从低位开始，按照字典顺序进行比较
+
+代码
+
+	#include <iostream>
+	#include <fstream>
+	#include <string>
+
+	using namespace std;
+
+	int main() {
+    	// open file
+    	ifstream inputFile("C-small-2-attempt0.in");
+    	ofstream outputFile("output");
+
+    	string temp;
+    	int caseNum;
+    	getline(inputFile, temp);
+    	caseNum = atoi(temp.c_str());
+    	for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+        	int cardNum;
+        	getline(inputFile, temp);
+        	cardNum = atoi(temp.c_str());
+        	int cost = 0;
+        	string prevCard = "", curCard = "";
+        	for (int i = 1; i <= cardNum; i++) {
+            	getline(inputFile, curCard);
+            	if (curCard < prevCard) {
+                	cost++;
+            	}else {
+            		// 只记录上一张卡片的名字
+                	prevCard = curCard;
+            	}
+        	}
+        	// output result
+        	outputFile << "Case #" << caseIndex << ": " << cost << endl;
+    	}
+    	inputFile.close();
+    	outputFile.close();
+    	return 0;
+	}
+	
+---
