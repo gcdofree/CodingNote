@@ -233,3 +233,105 @@ Practice Round
 	}
 	
 ---
+
+*	Name: Super 2048
+*	Problem: 根据游戏2048的规则，计算滑动一次之后的结果
+*	Link: https://code.google.com/codejam/contest/3214486/dashboard#s=p1
+
+思路：按照滑动的方向逆向计算结果即可，注意合并出来的新结果不能再参与下一次计算
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+
+	using namespace std;
+
+	void handleHandMove(string direction, vector<vector<int>> &mat, int n) {
+    	if (direction == "left") {
+        // to left
+        	for (int i = 0; i < n; i++) {
+            	int lastValue = 0;
+            	vector<int> tempResult;
+            	for (int j = 0; j < n; j++) {
+                	if (j == n-1 && mat[i][j] == 0) {
+                    	tempResult.push_back(lastValue);
+                    	continue;
+                	}
+                	if (mat[i][j] == 0) continue;
+                	if (lastValue == 0) {
+                    	lastValue = mat[i][j];
+                    	if (j == n-1)
+                        	tempResult.push_back(lastValue);
+                    	continue;
+                	}
+                	int tempValue = lastValue;
+                	if (lastValue == mat[i][j]) {// merge
+                    	tempValue <<= 1;
+                    	j++;
+                	}
+                	tempResult.push_back(tempValue);
+                	lastValue = 0;
+                	j--;
+            	}
+            	int size = tempResult.size();
+            	for (int k = 0; k < n; k++) {
+                	if (k < size)
+                    	mat[i][k] = tempResult[k];
+                	else
+                    	mat[i][k] = 0;
+            	}
+        	}
+    	}else if (direction == "right") {
+        	// to right
+			// ... 代码思路和左移相同，就不写了
+    	}else if (direction == "up") {
+        	// to up
+			// ... 代码思路和左移相同，就不写了
+    	}else {
+        	// to down
+			// ... 代码思路和左移相同，就不写了
+    	}
+	}
+
+	int main() {
+
+    	// open file
+    	ifstream inputFile("B-large-practice.in");
+    	ofstream outputFile("output");
+
+		int caseNum;
+    	inputFile >> caseNum;
+
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+			int n;
+			inputFile >> n;
+    		vector<vector<int>> mat(n, vector<int>(n, 0));
+        	string direction = "";
+        	inputFile >> direction;
+
+        	// init matrix
+        	for (int i = 0; i < n; i++) {
+            	for (int j = 0; j < n; j++) {
+                	inputFile >> mat[i][j];
+            	}
+        	}
+        	handleHandMove(direction, mat, n);
+
+        	outputFile << "Case #" << caseIndex << ":" << endl;
+        	for (int i = 0; i < n; i++) {
+            	for (int j = 0; j < n; j++) {
+                	outputFile << mat[i][j] << " ";
+            	}
+            	outputFile << endl;
+        	}
+
+		}
+    	inputFile.close();
+    	outputFile.close();
+		return 0;
+	}
+
+---
