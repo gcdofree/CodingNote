@@ -234,6 +234,10 @@ Practice Round
 	
 ---
 
+##### Google APAC 2015 University Graduates Test
+
+Round A
+
 *	Name: Super 2048
 *	Problem: 根据游戏2048的规则，计算滑动一次之后的结果
 *	Link: https://code.google.com/codejam/contest/3214486/dashboard#s=p1
@@ -333,5 +337,27 @@ Practice Round
     	outputFile.close();
 		return 0;
 	}
+
+---
+
+*	Name: Addition
+*	Problem: 给出类似 a+b=12, b+c=8 求e+d=?
+*	Link: https://code.google.com/codejam/contest/3214486/dashboard#s=p2
+
+思路：按照滑动的方向逆向计算结果即可，注意合并出来的新结果不能再参与下一次计算
+
+代码
+
+---
+
+Round B
+
+*	Name: Parentheses Order
+*	Problem: 给出括号的对数n，求第K个字母序列的括号组合
+*	Link: https://code.google.com/codejam/contest/4214486/dashboard#s=p3
+
+思路：按照滑动的方向逆向计算结果即可，注意合并出来的新结果不能再参与下一次计算
+
+代码
 
 ---
