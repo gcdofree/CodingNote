@@ -361,3 +361,108 @@ Round B
 代码
 
 ---
+
+*	Name: New Years Eve
+*	Problem: 根据宴会上的塔形高脚杯排列规则，从顶部向下倒酒，要求计算第n层第k个酒杯内的酒量
+*	Link: https://code.google.com/codejam/contest/4214486/dashboard#s=p1
+
+思路：首先找出快速定位某一层酒杯对应下一层酒杯ID的方法（一个酒杯对应下一层的三个酒杯），同时需要一个数组记录酒杯内的剩余酒量（只需两层数组即可，当前层和下一层，来回替换）。如果某一层的酒杯都没有被装满，则无需向下计算。
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+
+	using namespace std;
+	
+	int getInnerLevel(int number) {
+	    int level = 1;
+	    int tempV = level;
+	    while (true) {
+	        if (number - tempV < 1 && number - tempV > -level )
+	            return level;
+	        level++;
+	        tempV += level;
+	    }
+	    return level;
+	}
+	
+	bool checkCanNextState(int level, vector<vector<double>> &storage, int numberSize) {
+	    for (int k = 1; k <= numberSize; k++) {
+	        if (storage[level][k] > 250)
+	            return true;
+	    }
+	    return false;
+	}
+	
+	int main() {
+	
+	    // open file
+	    ifstream inputFile("B-large-practice.in");
+	    ofstream outputFile("output");
+	
+	    cout.precision(10);
+	    outputFile.precision(10);
+	
+		int caseNum;
+	    inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+			int n, level, num;
+			inputFile >> n >> level >> num;
+	        int lastLevelNum = 0, i = 1;
+	        double wine = n * 750;
+	        while (i <= level) {
+	            lastLevelNum += i;
+	            i++;
+	        }
+	        vector<vector<double>> storage(2, vector<double>(lastLevelNum + 1, 0));
+	        storage[0][1] = wine;
+	        int currentStorageLevel = 0 , lastStorageLevel = 0;
+	
+	        for (int j = 1; j <= level; j++) {
+	            if (j > 1) {
+	                for (int k = 1; k <= lastLevelNum; k++) {
+	                    // get wine from lastLevel and pour to current level
+	                    if (storage[lastStorageLevel][k] > 0) {
+	                        double pourWine = storage[lastStorageLevel][k] / 3;
+	                        int innerLevel = getInnerLevel(k);
+	                        storage[currentStorageLevel][k] += pourWine;
+	                        storage[currentStorageLevel][k + innerLevel] += pourWine;
+	                        storage[currentStorageLevel][k + innerLevel + 1] += pourWine;
+	                    }
+	                }
+	                for (int k = 1; k <= lastLevelNum; k++) {
+	                    // clear lastLevel
+	                    storage[lastStorageLevel][k] = 0.0000000;
+	                }
+	            }
+	            if (j < level && !checkCanNextState(currentStorageLevel, storage, lastLevelNum)) {
+	                cout << "Case #" << caseIndex << ": 0.0000000" << endl;
+	                outputFile << "Case #" << caseIndex << ": 0.0000000" << endl;
+	                break;
+	            }
+	            if (j == level) {
+	                cout << "Case #" << caseIndex << ": "
+	                    << (storage[currentStorageLevel][num] > 250 ? 250.0000000 : storage[currentStorageLevel][num]) << endl;
+	                outputFile << "Case #" << caseIndex << ": "
+		                    << (storage[currentStorageLevel][num] > 250 ? 250.0000000 : storage[currentStorageLevel][num]) << endl;
+	                break;
+	            }
+	            for (int k = 1; k <= lastLevelNum; k++) {
+	                storage[currentStorageLevel][k] = storage[currentStorageLevel][k] > 250 ?
+	                    storage[currentStorageLevel][k] - 250.0000000 : 0.0000000;
+	            }
+	            lastStorageLevel = currentStorageLevel;
+	            currentStorageLevel = 1 - currentStorageLevel;
+	        }
+	        //outputFile << "Case #" << caseIndex << ":" << endl;
+		}
+	    inputFile.close();
+	    outputFile.close();
+		return 0;
+	}
+
+---
