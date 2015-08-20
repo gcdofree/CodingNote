@@ -462,3 +462,103 @@ Round B
 	}
 
 ---
+
+Round C
+
+*	Name: Minesweeper
+*	Problem: 和扫雷游戏的规则一致，在已知棋盘内容的情况下，计算最少的获胜点击次数
+*	Link: https://code.google.com/codejam/contest/5214486/dashboard#s=p0
+
+思路：首先读入棋盘，然后统计带数字格子的个数，注意此处可能涉及到递归（两个数字为0的格子相邻），最后计算剩余的可点击次数即可。
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+	
+	using namespace std;
+	
+	int isSurroundHaveMine(vector<vector<int>> &grid, int i, int j, int n) {
+	    int iIndex = i-1, jIndex = j-1;
+	    if (iIndex >= 0 && jIndex >= 0 && grid[iIndex][jIndex] == -1)
+	        return 2;
+		
+		// 搜索周围的8个格子，重复代码就不写了...
+	
+	    return 0;
+	}
+	
+	void makeSurroundClick(vector<vector<int>> &grid, int i, int j, int n) {
+	    int iIndex = i-1, jIndex = j-1, temp;
+	    if (iIndex >= 0 && jIndex >= 0) {
+	        temp = grid[iIndex][jIndex];
+	        grid[iIndex][jIndex] = 1;
+	        if (temp == 0)
+	            makeSurroundClick(grid, iIndex, jIndex, n);
+	    }
+	
+		// 搜索周围的8个格子，重复代码就不写了...
+	}
+	
+	int main() {
+	
+	    // open file
+	    ifstream inputFile("A-large-practice.in");
+	    ofstream outputFile("output");
+	
+		int caseNum;
+	    inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+			int n;
+			inputFile >> n;
+	
+	        vector<vector<int>> grid(n, vector<int>(n, 0));
+	
+	        int mineNum = 0;
+	
+	        for(int i = 0; i < n; i++) {
+	            for(int j = 0; j < n; j++) {
+	                char t;
+	                inputFile >> t;
+	                if (t == '*') {
+	                    grid[i][j] = -1;
+	                    mineNum++;
+	                }
+	            }
+	        }
+	
+	        for(int i = 0; i < n; i++) {
+	            for(int j = 0; j < n; j++) {
+	                if (grid[i][j] == 0) {
+	                    grid[i][j] = isSurroundHaveMine(grid, i, j, n);
+	                }
+	            }
+	        }
+	
+	        int clickZeroNum = 0;
+	        for(int i = 0; i < n; i++) {
+	            for(int j = 0; j < n; j++) {
+	                if (grid[i][j] == 0) {
+	                    makeSurroundClick(grid, i, j, n);
+	                    clickZeroNum++;
+	                }
+	            }
+	        }
+	
+	        for(int i = 0; i < n; i++) {
+	            for(int j = 0; j < n; j++) {
+	                if (grid[i][j] == 2) {
+	                    clickZeroNum++;
+	                }
+	            }
+	        }
+	
+	        outputFile << "Case #" << caseIndex << ": " << clickZeroNum << endl;
+		}
+	    inputFile.close();
+	    outputFile.close();
+		return 0;
+	}
