@@ -403,7 +403,6 @@ Round B
 	    ifstream inputFile("B-large-practice.in");
 	    ofstream outputFile("output");
 	
-	    cout.precision(10);
 	    outputFile.precision(10);
 	
 		int caseNum;
@@ -440,13 +439,10 @@ Round B
 	                }
 	            }
 	            if (j < level && !checkCanNextState(currentStorageLevel, storage, lastLevelNum)) {
-	                cout << "Case #" << caseIndex << ": 0.0000000" << endl;
 	                outputFile << "Case #" << caseIndex << ": 0.0000000" << endl;
 	                break;
 	            }
 	            if (j == level) {
-	                cout << "Case #" << caseIndex << ": "
-	                    << (storage[currentStorageLevel][num] > 250 ? 250.0000000 : storage[currentStorageLevel][num]) << endl;
 	                outputFile << "Case #" << caseIndex << ": "
 		                    << (storage[currentStorageLevel][num] > 250 ? 250.0000000 : storage[currentStorageLevel][num]) << endl;
 	                break;
