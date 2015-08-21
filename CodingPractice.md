@@ -565,6 +565,117 @@ Round C
 
 ---
 
+*	Name: Broken Calculator
+*	Problem: 计算器上面只能选择乘法和等号，以及0-9的部分数字，要求利用这些条件计算出制定数字
+*	Link: https://code.google.com/codejam/contest/5214486/dashboard#s=p2
+
+思路：将数字拆成两两相乘的形式（DFS），如a = b * (a/b)，需要确保a%b == 0，不断拆分直到b可以用数字键直接按出来为止。用map存储中间结果，避免重复计算（DP）
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+	#include <vector>
+	#include <unordered_map>
+	#include <algorithm>
+	
+	using namespace std;
+	
+	vector<bool> numTemplate(10, false);
+	unordered_map<int, int> checkMap;
+	
+	int directClickNum(int target) {
+	    int origin = target;
+	    int click = 0;
+	    if (target == 0) {
+	        if (numTemplate[0])
+	            click++;
+	        else {
+	            click = -1;
+	        }
+	    }
+	    while (target >0) {
+	        int index = target % 10;
+	        if (numTemplate[index])
+	            click++;
+	        else {
+	            click = -1;
+	            break;
+	        }
+	        target /= 10;
+	    }
+	    checkMap[origin] = click;
+	    return click;
+	}
+	
+	int check(int target) {
+	    if (checkMap.find(target) != checkMap.end()) {
+	        return checkMap[target];
+	    }
+	    int directClick = directClickNum(target);
+	    if (directClick == -1) {
+	        int size = sqrt(target) + 1;
+	        int minClick = -1;
+	        for (int i = 1; i <= size; i++) {
+	            if (target % i != 0)
+	                continue;
+	            int firstClick = check(i);
+	            if (firstClick == -1)
+	                continue;
+	            int secondClick = check(target/i);
+	            if (secondClick == -1)
+	                continue;
+	            int totalClick = firstClick + secondClick + 1;
+	            if (minClick == -1)
+	                minClick = totalClick;
+	            minClick = minClick > totalClick ? totalClick : minClick;
+	        }
+	        checkMap[target] = minClick;
+	        return minClick;
+	    }else {
+	        checkMap[target] = directClick;
+	        return directClick;
+	    }
+	}
+	
+	int main() {
+	
+	    // open file
+	    ifstream inputFile("C-large-practice.in");
+	    ofstream outputFile("output");
+	
+		int caseNum;
+	    inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+	        for (int i = 0; i < 10; i++) {
+	            int tempNum;
+	            inputFile >> tempNum;
+	            if (tempNum)
+	                numTemplate[i] = true;
+	            else
+	                numTemplate[i] = false;
+	        }
+	
+	        int target;
+	        inputFile >> target;
+	        checkMap.clear();
+	        int result = check(target);
+	        if (result == -1)
+	            outputFile << "Case #" << caseIndex << ": Impossible" << endl;
+	        else
+	            outputFile << "Case #" << caseIndex << ": " << result + 1 << endl;
+		}
+	    inputFile.close();
+	    outputFile.close();
+		return 0;
+	}
+
+
+---
+
 Round D
 
 *	Name: GBus count
