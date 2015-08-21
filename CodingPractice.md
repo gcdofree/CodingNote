@@ -562,3 +562,58 @@ Round C
 	    outputFile.close();
 		return 0;
 	}
+
+---
+
+Round D
+
+*	Name: GBus count
+*	Problem: 给出每个bus的路线（途经站点），求过某个站点bus的数量
+*	Link: https://code.google.com/codejam/contest/6214486/dashboard#s=p1
+
+思路：建立数组，统计每个站点bus经过的数量，只需遍历一次，后续直接查询即可。
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+	
+	using namespace std;
+	
+	int main() {
+	
+	    // open file
+	    ifstream inputFile("B-large-practice.in");
+	    ofstream outputFile("output");
+
+		int caseNum;
+	    inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+			int pairNum;
+			inputFile >> pairNum;
+	        vector<int> countData(5001, 0);
+	        for (int i = 0; i < pairNum; i++) {
+	            int index1, index2;
+	            inputFile >> index1 >> index2;
+	            for (int j = index1; j <= index2; j++) {
+	                countData[j]++;
+	            }
+	        }
+	
+	        outputFile << "Case #" << caseIndex << ":";
+	        int testNum;
+	        inputFile >> testNum;
+	        for (int i = 0; i < testNum; i++) {
+	            int index;
+	            inputFile >> index;
+	            outputFile << " " << countData[index];
+	        }
+	        outputFile << endl;
+		}
+	    inputFile.close();
+	    outputFile.close();
+		return 0;
+	}
