@@ -617,3 +617,80 @@ Round D
 	    outputFile.close();
 		return 0;
 	}
+
+---
+
+*	Name: Sort a scrambled itinerary
+*	Problem: 给出打乱顺序的飞机票（起点和终点），要求重新排序后输出正确的飞行顺序
+*	Link: https://code.google.com/codejam/contest/6214486/dashboard#s=p2
+
+思路：实际上就是把每个机场看做是一个node，包含prev，next，val三个属性。首先生成所有node，然后找到最开始的那个机场，一直输出到最后的机场即可。需要用一个hashMap来存储机场<airportName, airportNode>
+
+代码
+
+	#include <iostream>
+	#include <string>
+	#include <fstream>
+	#include <unordered_map>
+	
+	using namespace std;
+	
+	struct Node {
+	    Node *prev;
+	    Node *next;
+	    string val;
+	    Node(string str) : prev(NULL), next(NULL), val(str){};
+	};
+	
+	int main() {
+	
+	    // open file
+	    ifstream inputFile("C-large-practice.in");
+	    ofstream outputFile("output");
+	
+		int caseNum;
+	    inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+	        Node *root = NULL;
+	        unordered_map<string, Node *> airportMap;
+			int pairNum;
+			inputFile >> pairNum;
+	        for (int i = 0; i < pairNum; i++) {
+	            string val1, val2;
+	            inputFile >> val1 >> val2;
+	            Node *temp1, *temp2;
+	            if (airportMap.find(val1) != airportMap.end()) {
+	                temp1 = airportMap[val1];
+	            }else {
+	                temp1 = new Node(val1);
+	                airportMap[val1] = temp1;
+	            }
+	            if (airportMap.find(val2) != airportMap.end()) {
+	                temp2 = airportMap[val2];
+	            }else {
+	                temp2 = new Node(val2);
+	                airportMap[val2] = temp2;
+	            }
+	            temp1->next = temp2;
+	            temp2->prev = temp1;
+	            if (!root)
+	                root = temp1;
+	        }
+	        // find start node
+	        while (root->prev) {
+	            root = root->prev;
+	        }
+	        outputFile << "Case #" << caseIndex << ":";
+	        while (root->next) {
+	            outputFile << " " << root->val << "-" << root->next->val;
+	            root = root->next;
+	        }
+	        outputFile << endl;
+		}
+	    inputFile.close();
+	    outputFile.close();
+		return 0;
+	}
+
+---
