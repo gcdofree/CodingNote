@@ -694,3 +694,97 @@ Round D
 	}
 
 ---
+
+*	Name: Cube IV
+*	Problem: 在一个方阵中，每个房间都有数字标号，离开房间时必须移动到比当前数字大1的房间中，求移动的最长路径
+*	Link: https://code.google.com/codejam/contest/6214486/dashboard#s=p0
+
+思路：首先构造矩阵，然后按照规则进行DFS即可。注意DFS的方向仅限于上下左右四个方向，不是周围的八个方向
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+	#include <vector>
+	
+	using namespace std;
+	
+	void setLongestPath(int start, int pathLength, vector<int> &result) {
+	    if (start < result[pathLength]) {
+	        result[pathLength] = start;
+	    }
+	}
+	
+	void checkPathDFS(vector<vector<int>> &room, int n, int i, int j, int start, int pathLength, vector<int> &result) {
+	    int currentNum = room[i][j];
+	    int largerNum = currentNum + 1;
+	    int totalLength = n*n;
+	    if (currentNum == totalLength) {
+	        setLongestPath(start, pathLength, result);
+	        return;
+	    }
+	
+	    int index1 = i-1, index2 = j;
+	    if (index1 >= 0 && room[index1][index2] == largerNum) {
+	        checkPathDFS(room, n, index1, index2, start, pathLength+1, result);
+	    }
+	
+	    index1 = i, index2 = j-1;
+	    if (index2 >= 0 && room[index1][index2] == largerNum) {
+	        checkPathDFS(room, n, index1, index2, start, pathLength+1, result);
+	    }
+	
+	    index1 = i, index2 = j+1;
+	    if (index2 < n && room[index1][index2] == largerNum) {
+	        checkPathDFS(room, n, index1, index2, start, pathLength+1, result);
+	    }
+	
+	    index1 = i+1, index2 = j;
+	    if (index1 < n && room[index1][index2] == largerNum) {
+	        checkPathDFS(room, n, index1, index2, start, pathLength+1, result);
+	    }
+	
+	    setLongestPath(start, pathLength, result);
+	}
+	
+	int main() {
+	
+	    // open file
+	    ifstream inputFile("A-large-practice.in");
+	    ofstream outputFile("output");
+	
+		int caseNum;
+	    inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+	        int n;
+	        inputFile >> n;
+	        vector<vector<int>> room(n, vector<int>(n, 0));
+	        int totalLength = n*n;
+	        vector<int> result(totalLength+1, totalLength + 1);
+	        for (int i = 0; i < n; i++) {
+	            for (int j = 0; j < n; j++) {
+	                inputFile >> room[i][j];
+	            }
+	        }
+	
+	        for (int i = 0; i < n; i++) {
+	            for (int j = 0; j < n; j++) {
+	                int pathLength = 1;
+	                checkPathDFS(room, n, i, j, room[i][j], pathLength, result);
+	            }
+	        }
+	
+	        for (int i = totalLength; i > 0; i--) {
+	            if (result[i] < totalLength + 1) {
+	                outputFile << "Case #" << caseIndex << ": " << result[i] << " " << i << endl;
+	                break;
+	            }
+	        }
+		}
+	    inputFile.close();
+	    outputFile.close();
+		return 0;
+	}
