@@ -297,6 +297,60 @@ Round A
 
 ---
 
+*	Name: gCube
+*	Problem: 给出一个多维长方体，求转化为相同体积多维立方体的边长
+*	Link: https://code.google.com/codejam/contest/4284486/dashboard#s=p2
+
+思路：只要把题目的多维立方体定义看懂就行，求解体积的时候注意不要溢出，可以先开方再相乘
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+	#include <vector>
+	#include <algorithm>
+	
+	using namespace std;
+	
+	int main() {
+	
+		// open file
+		ifstream inputFile("input");
+		ofstream outputFile("output");
+	
+		cout.precision(10);
+		outputFile.precision(10);
+	
+		int caseNum;
+		inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+			int dimension, question;
+			inputFile >> dimension >> question;
+			vector<long long> dime(dimension);
+			for (int i = 0; i < dimension; i++) {
+				inputFile >> dime[i];
+			}
+			outputFile << "Case #" << caseIndex << ":" << endl;
+			for (int i = 0; i < question; i++) {
+				int dimeL, dimeR;
+				inputFile >> dimeL >> dimeR;
+				int curDime = dimeR - dimeL + 1;
+				double volume = 1.0;
+				for (int j = dimeL; j <= dimeR; j++) {
+					volume *= pow(dime[j], 1.0 / curDime);
+				}
+				outputFile << volume << endl;
+			}
+		}
+		inputFile.close();
+		outputFile.close();
+		return 0;
+	}
+
+---
 
 ##### Google APAC 2015 University Graduates Test
 
