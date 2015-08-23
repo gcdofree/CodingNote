@@ -3,6 +3,11 @@
 
 将本人在编程过程中的一些体会，以及网上看到的心得的记录和整理，方便以后自己和团队的参考，提高效率。如果本文对其他开发人员也有所帮助，也欢迎大家给出反馈或者提出改进意见。
 
+*	[Leetcode](#leetcode)
+*	[Google Code Jam](#google-code-jam)
+	*	[Google APAC 2016 University Graduates Test](#google-apac-2016-university-graduates-test)
+	*	[Google APAC 2015 University Graduates Test](#google-apac-2015-university-graduates-test)
+
 #### Leetcode
 
 Paint House
