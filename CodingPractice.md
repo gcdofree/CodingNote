@@ -320,7 +320,6 @@ Round A
 		ifstream inputFile("input");
 		ofstream outputFile("output");
 	
-		cout.precision(10);
 		outputFile.precision(10);
 	
 		int caseNum;
