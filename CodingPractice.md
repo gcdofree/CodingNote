@@ -4,13 +4,27 @@
 将本人在编程过程中的一些体会，以及网上看到的心得的记录和整理，方便以后自己和团队的参考，提高效率。如果本文对其他开发人员也有所帮助，也欢迎大家给出反馈或者提出改进意见。
 
 *	[Leetcode](#leetcode)
+	*	[Paint House](#paint-house)
 *	[Google Code Jam](#google-code-jam)
 	*	[Google APAC 2016 University Graduates Test](#google-apac-2016-university-graduates-test)
+		*	[Bad Horse](#bad-horse)
+		*	[Captain Hammer](#captain-hammer)
+		*	[Moist](#moist)
+		*	[Googol String](#googol-string)
+		*	[gCube](#gcube)
 	*	[Google APAC 2015 University Graduates Test](#google-apac-2015-university-graduates-test)
+		*	[Super 2048](#super-2048)
+		*	[Addition](#addition)
+		*	[Parentheses Order](#parentheses-order)
+		*	[Minesweeper](#minesweeper)
+		*	[Broken Calculator](#broken-calculator)
+		*	[GBus count](#gbus-count)
+		*	[Sort a scrambled itinerary](#sort-a-scrambled-itinerary)
+		*	[Cube IV](#cube-iv)
 
 #### Leetcode
 
-Paint House
+###### Paint House
 
 There are a row of houses, each house can be painted with three colors red, blue and green. The cost of painting each house with a certain color is different. You have to paint all the houses such that no two adjacent houses have the same color. You have to paint the houses with minimum cost. How would you do it? Note: Painting house-1 with red costs different from painting house-2 with red. The costs are different for each house and each color.
 
@@ -47,7 +61,7 @@ Tips:
 
 ##### Google APAC 2016 University Graduates Test
 
-Practice Round
+###### Bad Horse
 
 *	Name: Bad Horse
 *	Problem: 给出所有人的名字（名字不重复），和所有的pair（两个不同的名字组成一个pair），问能否把所有人分成两队，每个队伍里面不包含上述的任意一个pair
@@ -147,6 +161,8 @@ Practice Round
 	
 ---
 
+###### Captain Hammer
+
 *	Name: Captain Hammer
 *	Problem: 给出初始速度大小和飞行的距离，求初始飞行角度。这里只考虑重力的影响，不受空气摩擦力。
 *	Link: https://code.google.com/codejam/contest/6234486/dashboard#s=p1
@@ -190,6 +206,8 @@ Practice Round
 	}
 
 ---
+
+###### Moist
 
 *	Name: Moist
 *	Problem: 给出一个卡片组，要求计算用插入排序时，移动当前卡片的次数（一次排序只算一次）
@@ -240,6 +258,8 @@ Practice Round
 ---
 
 Round A
+
+###### Googol String
 
 *	Name: Googol String
 *	Problem: 按照规则顺序生成字符串，求第k个字符 SN = SN-1 + "0" + switch(reverse(SN-1)).
@@ -302,6 +322,8 @@ Round A
 
 ---
 
+###### gCube
+
 *	Name: gCube
 *	Problem: 给出一个多维长方体，求转化为相同体积多维立方体的边长
 *	Link: https://code.google.com/codejam/contest/4284486/dashboard#s=p2
@@ -359,6 +381,8 @@ Round A
 ##### Google APAC 2015 University Graduates Test
 
 Round A
+
+###### Super 2048
 
 *	Name: Super 2048
 *	Problem: 根据游戏2048的规则，计算滑动一次之后的结果
@@ -462,6 +486,8 @@ Round A
 
 ---
 
+###### Addition
+
 *	Name: Addition
 *	Problem: 给出类似 a+b=12, b+c=8 求e+d=?
 *	Link: https://code.google.com/codejam/contest/3214486/dashboard#s=p2
@@ -474,6 +500,8 @@ Round A
 
 Round B
 
+###### Parentheses Order
+
 *	Name: Parentheses Order
 *	Problem: 给出括号的对数n，求第K个字母序列的括号组合
 *	Link: https://code.google.com/codejam/contest/4214486/dashboard#s=p3
@@ -483,6 +511,8 @@ Round B
 代码
 
 ---
+
+###### New Years Eve
 
 *	Name: New Years Eve
 *	Problem: 根据宴会上的塔形高脚杯排列规则，从顶部向下倒酒，要求计算第n层第k个酒杯内的酒量
@@ -587,6 +617,8 @@ Round B
 
 Round C
 
+###### Minesweeper
+
 *	Name: Minesweeper
 *	Problem: 和扫雷游戏的规则一致，在已知棋盘内容的情况下，计算最少的获胜点击次数
 *	Link: https://code.google.com/codejam/contest/5214486/dashboard#s=p0
@@ -686,6 +718,8 @@ Round C
 	}
 
 ---
+
+###### Broken Calculator
 
 *	Name: Broken Calculator
 *	Problem: 计算器上面只能选择乘法和等号，以及0-9的部分数字，要求利用这些条件计算出制定数字
@@ -800,6 +834,8 @@ Round C
 
 Round D
 
+###### GBus count
+
 *	Name: GBus count
 *	Problem: 给出每个bus的路线（途经站点），求过某个站点bus的数量
 *	Link: https://code.google.com/codejam/contest/6214486/dashboard#s=p1
@@ -852,6 +888,8 @@ Round D
 	}
 
 ---
+
+###### Sort a scrambled itinerary
 
 *	Name: Sort a scrambled itinerary
 *	Problem: 给出打乱顺序的飞机票（起点和终点），要求重新排序后输出正确的飞行顺序
@@ -927,6 +965,8 @@ Round D
 	}
 
 ---
+
+###### Cube IV
 
 *	Name: Cube IV
 *	Problem: 在一个方阵中，每个房间都有数字标号，离开房间时必须移动到比当前数字大1的房间中，求移动的最长路径
