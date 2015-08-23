@@ -234,6 +234,70 @@ Practice Round
 	
 ---
 
+Round A
+
+*	Name: Googol String
+*	Problem: 按照规则顺序生成字符串，求第k个字符 SN = SN-1 + "0" + switch(reverse(SN-1)).
+*	Link: https://code.google.com/codejam/contest/4284486/dashboard#s=p0
+
+思路：无需把整个字符串求出后再进行搜索，会溢出。需要根据k的位置进行分析，首先看是在第几个string，然后是否在中间的0处，然后递归到上一个string，直到第一个字符为止。
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+	#include <vector>
+	#include <algorithm>
+	
+	using namespace std;
+	
+	long long findPos(long long kth, bool reverse) {
+		long long index = 1;
+		while (index < kth) {
+			index = 2 * index + 1;
+		}
+		//index = (index - 1) / 2;
+		if (index == 1) {
+			if (reverse)
+				return 1;
+			else
+				return 0;
+		}
+		long long centerPos = index / 2 + 1;
+		if (kth == centerPos) {
+			if (reverse)
+				return 1;
+			else
+				return 0;
+		}
+		return findPos(centerPos * 2 - kth, !reverse);
+	}
+	
+	int main() {
+	
+		// open file
+		ifstream inputFile("A-large.in");
+		ofstream outputFile("output");
+	
+		int caseNum;
+		inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+			long long kth;
+			inputFile >> kth;
+			long long result = findPos(kth, false);
+			outputFile << "Case #" << caseIndex << ": " << result << endl;
+		}
+		inputFile.close();
+		outputFile.close();
+		return 0;
+	}
+
+---
+
+
 ##### Google APAC 2015 University Graduates Test
 
 Round A
