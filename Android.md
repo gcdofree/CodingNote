@@ -3,7 +3,18 @@ Android开发整理
 
 将本人在编程过程中的一些体会，以及网上看到的心得的记录和整理，方便以后自己和团队的参考，提高效率。如果本文对其他开发人员也有所帮助，也欢迎大家给出反馈或者提出改进意见。
 
-#### Android常用权限说明
+*	[Android常用权限说明](#permission)
+*	[Android开发tips](#development)
+*	[Android系统知识](#system)
+*	[Android界面、布局相关](#UI&Layout)
+*	[Android相机、Bitmap、Canvas绘制相关](#Camera&Bitmap&Canvas)
+*	[Android中Activity相关](#activity)
+*	[Android中存储，读写相关](#store&IO)
+*	[Android中消息提示相关](#message)
+*	[Android中线程相关](#thread)
+
+<h4 id="permission">Android常用权限说明</h4>
+
     <!-- 这个权限用于进行网络定位，包括wifi、基站-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
     <!-- 这个权限用于访问GPS定位-->
@@ -25,7 +36,7 @@ Android开发整理
     <!--允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
 
-#### Android开发tips
+<h4 id="development">Android开发tips</h4>
 *   Android Support Library 是保证高版本的SDK在开发时的向下兼容性，比如4.x的Fragment可以用在1.6的版本上。常用版本是Android       Support v4（照顾1.6及以上版本，eclipse中默认带有）
 *   9.png（适用于图片的缩放） WebP（Android 4.0之后原生支持，比png图片的无损压缩率更高）
 *   多使用lint工具优化代码
@@ -33,7 +44,7 @@ Android开发整理
 *   dp 密度无关像素，无论屏幕密度如何，都可以得到同样尺寸；sp 缩放无关像素，常用于字体大小（和系统设置的字体大小一致）
 *   Android中调用外部动态链接库（.so文件, shared object）时，方法为System.loadLibrary("test") 对应查找的文件为libtest.so
 
-#### Android系统知识
+<h4 id="system">Android系统知识</h4>
 Android开机加电引导流程，分为6个步骤
 *   Boot ROM: 引导boot媒介寻找boot loader的第一阶段，找到后开始执行boot loader
 *   Boot Loader: 区别于Linux内核程序，用于初始化内存并将Linux内核装载到内存中
@@ -46,7 +57,7 @@ Dalvik虚拟机和Java虚拟机的区别
 *   文件类型：Dalvik使用的是dex文件，JVM是class文件。一个dex文件可以包含多个类，而class只含有一个类，所以可以对重复出现的字符     串和常数只保存一次，节省空间，适用于内存和处理器性能有限的手机上。用DX工具可以把多个class编译为dex
 *   指令集：Dalvik的指令集是基于寄存器的，而JVM是基于栈的。基于栈的指令集比较紧凑，指令集较短；基于寄存器的指令集比较长。如JV     M的指令只占一个字节，所以是字节码。执行同样的功能，基于栈的需要执行更多指令，而基于寄存器的需要更多指令空间。更多的指令意     味着更长的占用CPU时间，更多的指令空间意味着缓存容易失效
 
-#### Android界面、布局相关
+<h4 id="UI&Layout">Android界面、布局相关</h4>
 *   五大布局: FrameLayout（所有空间堆叠到左上角，适用于layout中只有一个view），LinearLayout（线性布局），AbsoluteLayout（绝对     布局），RelativeLayout（相对布局），TableLayout（表格布局）
 *   ListView调用Adaptor的getView方法获取每个子项item视图
 *   LinearLayout中的layout_weight作用于剩余空间extra space，根据组件的weight比例进行分配
@@ -56,7 +67,7 @@ Dalvik虚拟机和Java虚拟机的区别
         layout_width = "match_parent"; // 此时w1=w2=w，剩余空间是-w，如果weight比是1:2，实际width比例是w1:w2 = (1-1/3):(1-2/3) = 2:1
 *   在旋转屏幕后，会将当前的activity销毁，然后重新生成，需要重写onSaveInstanceState(Bundle)方法，保存临时数据；旋转之后，系统     默认会调用layout-land中的同名layout文件
 
-#### Android相机、Bitmap、Canvas绘制相关
+<h4 id="Camera&Bitmap&Canvas">Android相机、Bitmap、Canvas绘制相关</h4>
 *   Android拍照
 
         Camera.takePicture(ShutterCallback, PictureCallbackRaw, PictureCallbackJpeg); 
@@ -78,7 +89,7 @@ Dalvik虚拟机和Java虚拟机的区别
         // 图片使用完成后，调用recycle回收资源
         bitmap.recycle();
         
-#### Android中Activity相关
+<h4 id="activity">Android中Activity相关</h4>
 Activity四种启动模式：standard（每次启用新的实例）, singleTop（如果在栈顶，则复用；否则启用新的实例）, singleTask, singleInstance
 
 *   任务Task是一系列相关的Activity组成
@@ -98,11 +109,11 @@ startActivity是系统方法，其中intent用来在不同的activity之间通�
 *   FragmentTransaction，包含add, remove,  replace方法操作fragment，最后调用commit，commit并不是立即执行，而是把事务transaction加入到对应activity的UI线程队列中
 *   fragment生命周期：onAttach, onCreate, onCreateView, onActivityCreated，与托管的activity状态一致，onDestroyView, onDestroy, onDetach
 
-#### Android中存储，读写相关
+<h4 id="store&IO">Android中存储，读写相关</h4>
 Sharedpreferences 进行保存时，commit是同步写到存储介质上，并返回true or false；apply是异步写到存储介质上，无返回值，效率比commit高
 
-#### Android中消息提示相关
+<h4 id="message">Android中消息提示相关</h4>
 Toast 无法自定义duration，只能是LENGTH_SHORT或者LENGTH_LONG
 
-#### Android中线程相关
+<h4 id="thread">Android中线程相关</h4>
 在主线程中，系统已经自动调用了Looper.prepare()方法，但是在子线程中创建handler时，则需要在创建之前添加Looper.prepare()，在创建完成后添加Looper.loop()，相当于把子线程变成loop循环线程。一个线程对应一个looper，一个looper对应一个Message Queue（源码Looper类中仅有一个Thread和MQ对象），一个MQ可以对应多个Handler和多个Message。消息由handler发送，源码的sendMessage方法里会有message.target = this，MQ通过识别target让对应的handler处理消息
