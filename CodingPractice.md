@@ -12,6 +12,7 @@
 		*	[Moist](#moist)
 		*	[Googol String](#googol-string)
 		*	[gCube](#gcube)
+		*	[gSnake](#gSnake)
 	*	[Google APAC 2015 University Graduates Test](#google-apac-2015-university-graduates-test)
 		*	[Super 2048](#super-2048)
 		*	[Addition](#addition)
@@ -370,6 +371,169 @@ Round A
 				}
 				outputFile << volume << endl;
 			}
+		}
+		inputFile.close();
+		outputFile.close();
+		return 0;
+	}
+
+---
+
+###### gSnake
+
+*	Name: gSnake
+*	Problem: 给出贪吃蛇的规则，要求在n步调整方向之后，贪吃蛇的长度
+*	Link: https://code.google.com/codejam/contest/4284486/dashboard#s=p3
+
+思路：根据规则模拟贪吃蛇的运动即可。注意检查碰撞时无需把所有贪吃蛇所在的格点都进行比较，只需要比较当前行包含的贪吃蛇所在格点即可。所以对应的数据结构是一个set数组vector<unordered_set<int>>。存储贪吃蛇所在格点时，应使用链表而不是vector，减少元素的复制和移动次数，提高速度。Large-test-case需要在release下跑，否则会超时
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+	#include <vector>
+	#include <unordered_map>
+	#include <unordered_set>
+	#include <algorithm>
+	#include <list>
+	
+	using namespace std;
+	
+	struct Grid
+	{
+		int x;
+		int y;
+	};
+	
+	int row, colume;
+	
+	const static int UP = 1;
+	const static int RIGHT = 2;
+	const static int DOWN = 3;
+	const static int LEFT = 4;
+	
+	void getNextPos(Grid &startGrid, char action, int &direction) {
+		if (action == 'R') {
+			direction = direction % 4 + 1;
+		}
+		else if (action == 'L') {
+			direction = direction - 1;
+			if (direction == 0)
+				direction = 4;
+		}
+		switch (direction)
+		{
+		case UP:
+			startGrid.x--;
+			if (startGrid.x == 0)
+				startGrid.x = row;
+			break;
+		case RIGHT:
+			startGrid.y++;
+			if (startGrid.y == colume + 1)
+				startGrid.y = 1;
+			break;
+		case DOWN:
+			startGrid.x++;
+			if (startGrid.x == row + 1)
+				startGrid.x = 1;
+			break;
+		case LEFT:
+			startGrid.y--;
+			if (startGrid.y == 0)
+				startGrid.y = colume;
+			break;
+		default:
+			break;
+		}
+	}
+	
+	int main() {
+	
+		// open file
+		ifstream inputFile("D-large-practice.in");
+		ofstream outputFile("output");
+	
+		int caseNum;
+		inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+			int turnNum;
+			inputFile >> turnNum >> row >> colume;
+			int extraStep = max(row, colume);
+			int lastStep;
+			unordered_map<int, char> turnAction;
+			vector<unordered_set<int>> snake(row+1);
+			vector<unordered_set<int>> usedFood(row+1);
+			list<Grid> p;
+			list<Grid>::iterator head, end;
+			for (int i = 0; i < turnNum; i++)
+			{
+				int step;
+				char turn;
+				inputFile >> step >> turn;
+				turnAction.insert(make_pair(step, turn));
+				lastStep = step;
+			}
+	
+			int timeStep = 0;
+			int direction = RIGHT;
+			Grid startGrid, endGrid;
+			startGrid.x = 1;
+			startGrid.y = 1;
+			endGrid.x = 1;
+			endGrid.y = 1;
+			snake[1].insert(1);
+			p.push_back(startGrid);
+			head = p.begin();
+			end = p.begin();
+			int totalSize = 1;
+			for (; timeStep <= lastStep + extraStep; timeStep++) {
+				// one step further
+				if (turnAction.find(timeStep) != turnAction.end()) {
+					getNextPos(startGrid, turnAction[timeStep], direction);
+				}
+				else
+				{
+					getNextPos(startGrid, NULL, direction);
+				}
+				// check self bite
+				if (snake[startGrid.x].find(startGrid.y) != snake[startGrid.x].end()) {
+					if (startGrid.x == endGrid.x && startGrid.y == endGrid.y) {
+					
+					}
+					else 
+					{
+						outputFile << "Case #" << caseIndex << ": " << totalSize << endl;
+						break;
+					}
+				}
+				p.push_back(startGrid);
+				head++;
+				snake[startGrid.x].insert(startGrid.y);
+				// check for food
+				if (((startGrid.x + startGrid.y) & 0x1) == 1 && usedFood[startGrid.x].find(startGrid.y) == usedFood[startGrid.x].end()) {
+					// grow
+					totalSize++;
+					usedFood[startGrid.x].insert(startGrid.y);
+				}
+				else
+				{
+					// keep going
+					end++;
+					snake[endGrid.x].erase(endGrid.y);
+					endGrid.x = (*end).x;
+					endGrid.y = (*end).y;
+				}
+			}
+			if (timeStep > lastStep + extraStep)
+			{
+				outputFile << "Case #" << caseIndex << ": " << totalSize << endl;
+			}
+	
+			//outputFile << "Case #" << caseIndex << ": " << result + 1 << endl;
 		}
 		inputFile.close();
 		outputFile.close();
