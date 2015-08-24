@@ -12,7 +12,7 @@
 		*	[Moist](#moist)
 		*	[Googol String](#googol-string)
 		*	[gCube](#gcube)
-		*	[gSnake](#gSnake)
+		*	[gSnake](#gsnake)
 	*	[Google APAC 2015 University Graduates Test](#google-apac-2015-university-graduates-test)
 		*	[Super 2048](#super-2048)
 		*	[Addition](#addition)
