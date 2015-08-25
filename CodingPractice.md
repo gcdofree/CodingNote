@@ -12,6 +12,7 @@
 		*	[Moist](#moist)
 		*	[Googol String](#googol-string)
 		*	[gCube](#gcube)
+		*	[gCampus](#gcampus)
 		*	[gSnake](#gsnake)
 	*	[Google APAC 2015 University Graduates Test](#google-apac-2015-university-graduates-test)
 		*	[Super 2048](#super-2048)
@@ -374,6 +375,97 @@ Round A
 		}
 		inputFile.close();
 		outputFile.close();
+		return 0;
+	}
+
+---
+
+###### gCampus
+
+*	Name: gCampus
+*	Problem: 给出一个图，包含节点和路径权值，求出无效路径（没有出现在任意两点之间的最短路径上的路径）
+*	Link: https://code.google.com/codejam/contest/4284486/dashboard#s=p2
+
+思路：首先构建无向图，然后利用动态规划计算出两点之间的最短路径长度，最后一次判断每条路径是否符合要求即可。Large-test-case需要在release下跑，否则会超时
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+	#include <algorithm>
+	
+	using namespace std;
+	
+	struct edge {
+	    int start;
+	    int end;
+	    long long cost;
+	};
+	
+	int main() {
+	
+	    // open file
+	    ifstream inputFile("C-small-practice.in");
+	    ofstream outputFile("output");
+	
+		int caseNum;
+	    inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+			int n, m;
+			inputFile >> n >> m;
+			vector<edge> edges(m*2);
+	        for (int i = 0; i < m; i++) {
+	            edge e;
+	            inputFile >> e.start >> e.end >> e.cost;
+	            edges[i+i] = e;
+	            int temp = e.start;
+	            e.start = e.end;
+	            e.end = temp;
+	            edges[i+i+1] = e;
+	        }
+	        vector<vector<long long>> route(n, vector<long long>(n, 1e10));
+	        for (int i = 0; i < n; i++) {
+	            route[i][i] = 0;
+	        }
+	        vector<bool> result(m, false);
+	        m *= 2;
+	        for (int i = 0; i < m; i++) {
+	            int start = edges[i].start;
+	            int end = edges[i].end;
+	            long long cost = edges[i].cost;
+	            route[start][end] = min(cost, route[start][end]);
+	        }
+	        for (int k = 0; k < n; k++) {
+	            for (int i = 0; i < n; i++) {
+	                for (int j = 0; j < n; j++) {
+	                    route[i][j] = min(route[i][j], route[i][k] + route[k][j]);
+	                }
+	            }
+	        }
+	        for (int i = 0; i < n; i++) {
+	            for (int j = 0; j < n; j++) {
+	                for (int k = 0; k < m; k++) {
+	                    int start = edges[k].start;
+	                    int end = edges[k].end;
+	                    long long cost = edges[k].cost;
+	                    if (route[i][j] == route[i][start] + cost + route[end][j]) {
+	                        result[k/2] = true;
+	                    }
+	                }
+	            }
+	        }
+	        outputFile << "Case #" << caseIndex << ":" << endl;
+	        m /= 2;
+	        for (int i = 0; i < m; i++) {
+	            if (!result[i])
+	                outputFile << i << endl;
+	        }
+		}
+	    inputFile.close();
+	    outputFile.close();
 		return 0;
 	}
 
