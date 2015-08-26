@@ -76,13 +76,14 @@
 定义：用树形的结构来表示，分级或递归调用，将单一对象和对象组合用相同的方式看待。如树形菜单，文件夹管理
 
 示例：Android中view(Button, TextView)和viewGroup(RelativeLayout, LinearLayout)
-<RelativeLayout>
-     <Button />（第一层）
-     <TextView />（第一层）
-     <RelativeLayout>（第一层）
-          <Button />（第二层）
-          <TextView />（第二层）
+
+     <RelativeLayout>
+          <Button />（第一层）
+          <TextView />（第一层）
+          <RelativeLayout>（第一层）
+               <Button />（第二层）
+               <TextView />（第二层）
+          </RelativeLayout>
      </RelativeLayout>
-</RelativeLayout>
 
 ---
