@@ -9,21 +9,21 @@
 	*	[Meeting Rooms II](#meetingrooms2)
 *	[Google Code Jam](#googlecodejam)
 	*	[Google APAC 2016 University Graduates Test](#google-apac-2016-university-graduates-test)
-		*	[Bad Horse](#bad-horse)
-		*	[Captain Hammer](#captain-hammer)
+		*	[Bad Horse](#badhorse)
+		*	[Captain Hammer](#captainhammer)
 		*	[Moist](#moist)
-		*	[Googol String](#googol-string)
+		*	[Googol String](#googolstring)
 		*	[gCube](#gcube)
 		*	[gCampus](#gcampus)
 		*	[gSnake](#gsnake)
 	*	[Google APAC 2015 University Graduates Test](#google-apac-2015-university-graduates-test)
-		*	[Super 2048](#super-2048)
+		*	[Super 2048](#super2048)
 		*	[Addition](#addition)
-		*	[Parentheses Order](#parentheses-order)
+		*	[Parentheses Order](#parenthesesorder)
 		*	[Minesweeper](#minesweeper)
-		*	[Broken Calculator](#broken-calculator)
-		*	[GBus count](#gbus-count)
-		*	[Sort a scrambled itinerary](#sort-a-scrambled-itinerary)
+		*	[Broken Calculator](#brokencalculator)
+		*	[GBus count](#gbuscount)
+		*	[Sort a scrambled itinerary](#sortticket)
 		*	[Cube IV](#cube-iv)
 
 <h4 id="leetcode">Leetcode</h4>
@@ -87,9 +87,38 @@ Given an array of meeting time intervals consisting of start and end times \[[s1
 
 Given an array of meeting time intervals consisting of start and end times \[[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
 
-思路：
+思路：把时间不重叠的会议放到一个房间中，然后统计房间的数目即可
         
 代码
+
+    bool canAddtoRoom(Meeting &lastMeeting, Meeting &curMeeting) {
+        return curMeeting.start >= lastMeeting.end;
+    }
+
+    int meetingRoom(vector<int> &meeting, int n) {
+        vector<Meeting> meetingVector(n);
+        for (int i = 0; i < n; i++) {
+            meetingVector[i].start = meeting[i+i];
+            meetingVector[i].end = meeting[i+i+1];
+        }
+        sort(meetingVector.begin(), meetingVector.end(), comp);
+        vector<Meeting> result;
+        result.push_back(meetingVector[0]);
+        for (int i = 1; i < n; i++) {
+            bool needNewRoom = false;
+            for (int j = 0; j < result.size(); j++) {
+                if (canAddtoRoom(result[j], meetingVector[i])) {
+                    result[j] = meetingVector[i];
+                    break;
+                }
+                if (j == result.size()-1 && !needNewRoom)
+                    needNewRoom = true;
+            }
+            if (needNewRoom)
+                result.push_back(meetingVector[i]);
+        }
+        return result.size();
+    }
 
 ---
 
@@ -103,7 +132,7 @@ Tips:
 
 ##### Google APAC 2016 University Graduates Test
 
-###### Bad Horse
+<h6 id="badhorse">Bad Horse</h6>
 
 *	Name: Bad Horse
 *	Problem: 给出所有人的名字（名字不重复），和所有的pair（两个不同的名字组成一个pair），问能否把所有人分成两队，每个队伍里面不包含上述的任意一个pair
@@ -203,7 +232,7 @@ Tips:
 	
 ---
 
-###### Captain Hammer
+<h6 id="captainhammer">Captain Hammer</h6>
 
 *	Name: Captain Hammer
 *	Problem: 给出初始速度大小和飞行的距离，求初始飞行角度。这里只考虑重力的影响，不受空气摩擦力。
@@ -249,7 +278,7 @@ Tips:
 
 ---
 
-###### Moist
+<h6 id="moist">Moist</h6>
 
 *	Name: Moist
 *	Problem: 给出一个卡片组，要求计算用插入排序时，移动当前卡片的次数（一次排序只算一次）
@@ -301,7 +330,7 @@ Tips:
 
 Round A
 
-###### Googol String
+<h6 id="googolstring">Googol String</h6>
 
 *	Name: Googol String
 *	Problem: 按照规则顺序生成字符串，求第k个字符 SN = SN-1 + "0" + switch(reverse(SN-1)).
@@ -364,7 +393,7 @@ Round A
 
 ---
 
-###### gCube
+<h6 id="gcube">gCube</h6>
 
 *	Name: gCube
 *	Problem: 给出一个多维长方体，求转化为相同体积多维立方体的边长
@@ -420,7 +449,7 @@ Round A
 
 ---
 
-###### gCampus
+<h6 id="gcampus">gCampus</h6>
 
 *	Name: gCampus
 *	Problem: 给出一个图，包含节点和路径权值，求出无效路径（没有出现在任意两点之间的最短路径上的路径）
@@ -511,7 +540,7 @@ Round A
 
 ---
 
-###### gSnake
+<h6 id="gsnake">gSnake</h6>
 
 *	Name: gSnake
 *	Problem: 给出贪吃蛇的规则，要求在n步调整方向之后，贪吃蛇的长度
@@ -678,7 +707,7 @@ Round A
 
 Round A
 
-###### Super 2048
+<h6 id="super2048">Super 2048</h6>
 
 *	Name: Super 2048
 *	Problem: 根据游戏2048的规则，计算滑动一次之后的结果
@@ -782,7 +811,7 @@ Round A
 
 ---
 
-###### Addition
+<h6 id="addition">Addition</h6>
 
 *	Name: Addition
 *	Problem: 给出类似 a+b=12, b+c=8 求e+d=?
@@ -796,7 +825,7 @@ Round A
 
 Round B
 
-###### Parentheses Order
+<h6 id="parenthesesorder">Parentheses Order</h6>
 
 *	Name: Parentheses Order
 *	Problem: 给出括号的对数n，求第K个字母序列的括号组合
@@ -808,7 +837,7 @@ Round B
 
 ---
 
-###### New Years Eve
+<h6 id="newyearseve">New Years Eve</h6>
 
 *	Name: New Years Eve
 *	Problem: 根据宴会上的塔形高脚杯排列规则，从顶部向下倒酒，要求计算第n层第k个酒杯内的酒量
@@ -913,7 +942,7 @@ Round B
 
 Round C
 
-###### Minesweeper
+<h6 id="minesweeper">Minesweeper</h6>
 
 *	Name: Minesweeper
 *	Problem: 和扫雷游戏的规则一致，在已知棋盘内容的情况下，计算最少的获胜点击次数
@@ -1015,7 +1044,7 @@ Round C
 
 ---
 
-###### Broken Calculator
+<h6 id="brokencalculator">Broken Calculator</h6>
 
 *	Name: Broken Calculator
 *	Problem: 计算器上面只能选择乘法和等号，以及0-9的部分数字，要求利用这些条件计算出制定数字
@@ -1130,7 +1159,7 @@ Round C
 
 Round D
 
-###### GBus count
+<h6 id="gbuscount">GBus count</h6>
 
 *	Name: GBus count
 *	Problem: 给出每个bus的路线（途经站点），求过某个站点bus的数量
@@ -1185,7 +1214,7 @@ Round D
 
 ---
 
-###### Sort a scrambled itinerary
+<h6 id="sortticket">Sort a scrambled itinerary</h6>
 
 *	Name: Sort a scrambled itinerary
 *	Problem: 给出打乱顺序的飞机票（起点和终点），要求重新排序后输出正确的飞行顺序
@@ -1262,7 +1291,7 @@ Round D
 
 ---
 
-###### Cube IV
+<h6 id="cube4">Cube IV</h6>
 
 *	Name: Cube IV
 *	Problem: 在一个方阵中，每个房间都有数字标号，离开房间时必须移动到比当前数字大1的房间中，求移动的最长路径
