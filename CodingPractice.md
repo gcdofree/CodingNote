@@ -4,8 +4,10 @@
 将本人在编程过程中的一些体会，以及网上看到的心得的记录和整理，方便以后自己和团队的参考，提高效率。如果本文对其他开发人员也有所帮助，也欢迎大家给出反馈或者提出改进意见。
 
 *	[Leetcode](#leetcode)
-	*	[Paint House](#paint-house)
-*	[Google Code Jam](#google-code-jam)
+	*	[Paint House](#painthouse)
+	*	[Meeting Rooms](#meetingrooms)
+	*	[Meeting Rooms II](#meetingrooms2)
+*	[Google Code Jam](#googlecodejam)
 	*	[Google APAC 2016 University Graduates Test](#google-apac-2016-university-graduates-test)
 		*	[Bad Horse](#bad-horse)
 		*	[Captain Hammer](#captain-hammer)
@@ -24,9 +26,9 @@
 		*	[Sort a scrambled itinerary](#sort-a-scrambled-itinerary)
 		*	[Cube IV](#cube-iv)
 
-#### Leetcode
+<h4 id="leetcode">Leetcode</h4>
 
-###### Paint House
+<h5 id="painthouse">Paint House</h5>
 
 There are a row of houses, each house can be painted with three colors red, blue and green. The cost of painting each house with a certain color is different. You have to paint all the houses such that no two adjacent houses have the same color. You have to paint the houses with minimum cost. How would you do it? Note: Painting house-1 with red costs different from painting house-2 with red. The costs are different for each house and each color.
 
@@ -51,9 +53,27 @@ There are a row of houses, each house can be painted with three colors red, blue
 	    return min;
     }
 
+<h5 id="meetingrooms">Meeting Rooms</h5>
+
+Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), determine if a person could attend all meetings.
+
+思路：
+        
+代码
+
 ---
 
-#### Google Code Jam
+<h5 id="meetingrooms2">Meeting Rooms II</h5>
+
+Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
+
+思路：
+        
+代码
+
+---
+
+<h4 id="googlecodejam">Google Code Jam</h4>
 
 Tips: 
 *	Code Jam 里面的题目需要读写操作（输入数据从文件中读取，输出数据写入到文件中），可以提前准备好程序模板，包括#include的常用文件，main函数，IO操作等
