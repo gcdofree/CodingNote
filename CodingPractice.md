@@ -5,6 +5,7 @@
 
 *	[Leetcode](#leetcode)
 	*	[Paint House](#painthouse)
+	*	[Paint House II](#painthouse2)
 	*	[Meeting Rooms](#meetingrooms)
 	*	[Meeting Rooms II](#meetingrooms2)
 *	[Google Code Jam](#googlecodejam)
@@ -52,6 +53,41 @@ There are a row of houses, each house can be painted with three colors red, blue
 	    int min = Math.min(Math.min(f[n][0], f[n][1]), f[n][2]);
 	    return min;
     }
+
+---
+
+<h5 id="painthouse2">Paint House II</h5>
+
+There are a row of n houses, each house can be painted with one of the k colors. The cost of painting each house with a certain color is different. You have to paint all the houses such that no two adjacent houses have the same color. The cost of painting each house with a certain color is represented by a n x k cost matrix. For example, costs[0][0] is the cost of painting house 0 with color 0; costs[1][2] is the cost of painting house 1 with color 2, and so on... Find the minimum cost to paint all houses. All costs are positive integers. Could you solve it in O(nk) runtime? 
+
+思路：利用动态规划，dp[i]代表当前house用第i个color上色时的最小代价。通过记录上个房间的最小代价和次小代价，来计算当前房间的代价，并依次递推
+
+    dp[i][j] = min(dp[i-1][1], dp[i-1][2], ... , dp[i-1][k]) + cost[i][j];
+    // 实际上可以转化为
+    dp[i][j] = (minValue or secondMinValue) + cost[i][j];
+        
+代码
+
+    public int minCost(int n, int k, vector<vector<int>> &cost) {
+    // cost[i][j]是第i个房子上色为第j个颜色时的cost
+		int m1 = 0, m2 = 0;
+		vector<int> dp(k, 0);
+		for (int i = 0; i < n; i++) {
+			int t1 = m1, t2 = m2;
+			m1 = INT_MAX, m2 = INT_MAX;
+			for (int j = 0; j < k; j++) {
+				dp[j] = (dp[j] != t1 ? t1 : t2) + cost[i][j];
+				if (m1 <= dp[j]) m2 = min(dp[j], m2);
+				else {
+					m2 = m1;
+					m1 = dp[j];
+				}
+			}
+		}
+	    return m1;
+    }
+
+---
 
 <h5 id="meetingrooms">Meeting Rooms</h5>
 
