@@ -55,17 +55,37 @@ There are a row of houses, each house can be painted with three colors red, blue
 
 <h5 id="meetingrooms">Meeting Rooms</h5>
 
-Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), determine if a person could attend all meetings.
+Given an array of meeting time intervals consisting of start and end times \[[s1,e1],[s2,e2],...] (si < ei), determine if a person could attend all meetings.
 
-思路：
+思路：按照每个会议开始的时间进行排序，然后依次检查每个会议的开始时间，如果比上一个会议的结束时间早，就说明会议时间有重叠
         
 代码
+
+    bool meetingRoom(vector<int> &meeting, int n) {
+        vector<Meeting> meetingVector(n);
+        for (int i = 0; i < n; i++) {
+            meetingVector[i].start = meeting[i+i];
+            meetingVector[i].end = meeting[i+i+1];
+        }
+        sort(meetingVector.begin(), meetingVector.end(), comp);
+        for (int i = 1; i <= n; i++) {
+            if (meetingVector[i].start < meetingVector[i-1].end)
+                return false;
+        }
+        return true;
+    }
+
+    static bool comp(Meeting m1, Meeting m2) {
+        if (m1.start < m2.start)
+            return true;
+        return false;
+    }
 
 ---
 
 <h5 id="meetingrooms2">Meeting Rooms II</h5>
 
-Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
+Given an array of meeting time intervals consisting of start and end times \[[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
 
 思路：
         
