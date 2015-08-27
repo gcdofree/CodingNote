@@ -26,6 +26,7 @@
 		*	[GBus count](#gbuscount)
 		*	[Sort a scrambled itinerary](#sortticket)
 		*	[Cube IV](#cube-iv)
+		*	[Itz Chess](#itzchess)
 
 <h4 id="leetcode">Leetcode</h4>
 
@@ -1422,3 +1423,207 @@ Round D
 	    outputFile.close();
 		return 0;
 	}
+
+---
+
+<h6 id="itzchess">Itz Chess</h6>
+
+*	Name: Itz Chess
+*	Problem: 给出一个国际象棋的棋盘和初始的棋子，根据规则计算“吃棋子”的操作数量
+*	Link: https://code.google.com/codejam/contest/6214486/dashboard#s=p3
+
+思路：构建国际象棋的规则即可
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+	#include <vector>
+	
+	using namespace std;
+	
+	enum Piece {
+	King = 1,
+	Queen, Rook, Bishop, Knight, Pawn
+	};
+	
+	int getType(string &type) {
+	    if (type == "K")
+	        return Piece::King;
+	    if (type == "Q")
+	        return Piece::Queen;
+	    if (type == "R")
+	        return Piece::Rook;
+	    if (type == "B")
+	        return Piece::Bishop;
+	    if (type == "N")
+	        return Piece::Knight;
+	    if (type == "P")
+	        return Piece::Pawn;
+	    return 0;
+	}
+	
+	int getNumOnDirection(int i, int j, int direction, int scope, vector<vector<int>> &grid) {
+	    int xOffset = 0;
+	    int yOffset = 0;
+	    switch (direction) {
+	    case 1 :
+	        xOffset = -1;
+	        yOffset = 0;
+	        break;
+	    case 2 :
+	        xOffset = -1;
+	        yOffset = 1;
+	        break;
+	    case 3 :
+	        xOffset = 0;
+	        yOffset = 1;
+	        break;
+	    case 4 :
+	        xOffset = 1;
+	        yOffset = 1;
+	        break;
+	    case 5 :
+	        xOffset = 1;
+	        yOffset = 0;
+	        break;
+	    case 6 :
+	        xOffset = 1;
+	        yOffset = -1;
+	        break;
+	    case 7 :
+	        xOffset = 0;
+	        yOffset = -1;
+	        break;
+	    case 8 :
+	        xOffset = -1;
+	        yOffset = -1;
+	        break;
+	    default :
+	        break;
+	    }
+	
+	    for (int k = 1; k <= scope; k++) {
+	        i += xOffset;
+	        j += yOffset;
+	        if (i < 0 || i >= 8 || j < 0 || j >= 8)
+	            return 0;
+	        if (grid[i][j] > 0)
+	            return 1;
+	    }
+	}
+	
+	int getKnightNum(int i, int j, vector<vector<int>> &grid) {
+	    int num = 0;
+	    int index1 = i-1, index2 = j+2;
+	    if (index1>=0 && index2<8 && grid[index1][index2] > 0)
+	        num++;
+	    index2 = j-2;
+	    if (index1>=0 && index2>=0 && grid[index1][index2] > 0)
+	        num++;
+	    index1 = i+1;
+	    if (index1<8 && index2>=0 && grid[index1][index2] > 0)
+	        num++;
+	    index2 = j+2;
+	    if (index1<8 && index2<8 && grid[index1][index2] > 0)
+	        num++;
+	    index1 = i-2, index2 = j+1;
+	    if (index1>=0 && index2<8 && grid[index1][index2] > 0)
+	        num++;
+	    index2 = j-1;
+	    if (index1>=0 && index2>=0 && grid[index1][index2] > 0)
+	        num++;
+	    index1 = i+2;
+	    if (index1<8 && index2>=0 && grid[index1][index2] > 0)
+	        num++;
+	    index2 = j+1;
+	    if (index1<8 && index2<8 && grid[index1][index2] > 0)
+	        num++;
+	    return num;
+	}
+	
+	int getKillNum(int i, int j, int curPiece, vector<vector<int>> &grid) {
+	    int num = 0;
+	    switch (curPiece) {
+	    case Piece::King :
+	        num += getNumOnDirection(i, j, 1, 1, grid);
+	        num += getNumOnDirection(i, j, 2, 1, grid);
+	        num += getNumOnDirection(i, j, 3, 1, grid);
+	        num += getNumOnDirection(i, j, 4, 1, grid);
+	        num += getNumOnDirection(i, j, 5, 1, grid);
+	        num += getNumOnDirection(i, j, 6, 1, grid);
+	        num += getNumOnDirection(i, j, 7, 1, grid);
+	        num += getNumOnDirection(i, j, 8, 1, grid);
+	        break;
+	    case Piece::Queen :
+	        num += getNumOnDirection(i, j, 1, 8, grid);
+	        num += getNumOnDirection(i, j, 2, 8, grid);
+	        num += getNumOnDirection(i, j, 3, 8, grid);
+	        num += getNumOnDirection(i, j, 4, 8, grid);
+	        num += getNumOnDirection(i, j, 5, 8, grid);
+	        num += getNumOnDirection(i, j, 6, 8, grid);
+	        num += getNumOnDirection(i, j, 7, 8, grid);
+	        num += getNumOnDirection(i, j, 8, 8, grid);
+	        break;
+	    case Piece::Rook :
+	        num += getNumOnDirection(i, j, 1, 8, grid);
+	        num += getNumOnDirection(i, j, 3, 8, grid);
+	        num += getNumOnDirection(i, j, 5, 8, grid);
+	        num += getNumOnDirection(i, j, 7, 8, grid);
+	        break;
+	    case Piece::Bishop :
+	        num += getNumOnDirection(i, j, 2, 8, grid);
+	        num += getNumOnDirection(i, j, 4, 8, grid);
+	        num += getNumOnDirection(i, j, 6, 8, grid);
+	        num += getNumOnDirection(i, j, 8, 8, grid);
+	        break;
+	    case Piece::Knight :
+	        num += getKnightNum(i, j, grid);
+	        break;
+	    case Piece::Pawn :
+	        num += getNumOnDirection(i, j, 6, 1, grid);
+	        num += getNumOnDirection(i, j, 8, 1, grid);
+	        break;
+	    default :
+	        break;
+	    }
+	    return num;
+	}
+	
+	int main() {
+	
+	    // open file
+	    ifstream inputFile("D-large-practice.in");
+	    ofstream outputFile("output");
+	
+		int caseNum;
+	    inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+	        int n;
+	        inputFile >> n;
+	        vector<vector<int>> grid(8, vector<int>(8, 0));
+	        for (int i = 0; i < n; i++) {
+	            string tempStr, pos, type;
+	            inputFile >> tempStr;
+	            pos = tempStr.substr(0, 2);
+	            type = tempStr.substr(3);
+	            grid[pos[1] - '1']['H' - pos[0]] = getType(type);
+	        }
+	        int result = 0;
+	        for (int i = 0; i < 8; i++) {
+	            for (int j = 0; j < 8; j++) {
+	                result += getKillNum(i, j, grid[i][j], grid);
+	            }
+	        }
+	        outputFile << "Case #" << caseIndex << ": " << result << endl;
+		}
+	    inputFile.close();
+	    outputFile.close();
+		return 0;
+	}
+
+
+---
