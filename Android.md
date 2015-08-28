@@ -12,6 +12,8 @@ Android开发整理
 *	[Android中存储，读写相关](#store&IO)
 *	[Android中消息提示相关](#message)
 *	[Android中线程相关](#thread)
+*	[Android中BroadcastReceiver](#broadcastreceiver)
+*	[Android中Service](#service)
 
 <h4 id="permission">Android常用权限说明</h4>
 
@@ -35,6 +37,8 @@ Android开发整理
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
     <!--允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
+    <!--允许应用接受开机完成的广播，用于开机自启动 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
 
 <h4 id="development">Android开发tips</h4>
 *   Android Support Library 是保证高版本的SDK在开发时的向下兼容性，比如4.x的Fragment可以用在1.6的版本上。常用版本是Android       Support v4（照顾1.6及以上版本，eclipse中默认带有）
@@ -117,3 +121,14 @@ Toast 无法自定义duration，只能是LENGTH_SHORT或者LENGTH_LONG
 
 <h4 id="thread">Android中线程相关</h4>
 在主线程中，系统已经自动调用了Looper.prepare()方法，但是在子线程中创建handler时，则需要在创建之前添加Looper.prepare()，在创建完成后添加Looper.loop()，相当于把子线程变成loop循环线程。一个线程对应一个looper，一个looper对应一个Message Queue（源码Looper类中仅有一个Thread和MQ对象），一个MQ可以对应多个Handler和多个Message。消息由handler发送，源码的sendMessage方法里会有message.target = this，MQ通过识别target让对应的handler处理消息
+
+<h4 id="broadcastreceiver">Android中BroadcastReceiver</h4>
+
+Android实现开机启动时，需要定义一个BroadcastReceiver，用来接受开机完成的广播，同时也要申请对应的权限。在自定义的BroadcastReceiver的onReceive方法中，就可以启调对应的Activity（context.startActivity）或者Service（context.startService）。首次安装应用后需要打开应用激活，才能在下一开机时自启动
+
+<h4 id="service">Android中Service</h4>
+
+*   Service是后台机制，不依赖界面，并不是线程
+*   Service运行在主线程中，所以如果直接执行耗时操作，程序会无响应（可以在service中开启子线程）。Service的生命周期包括onCreate，onStartCommand，onDestroy。通过Intent intent = new Intent(this, MyService.class); startService(intent);来启动/结束service。onCreate方法只在Service被创建时调用，onStartCommand方法在每次开启service的时候都会被调用
+*   Activity中可以的service通信，包括绑定和解绑service。在Activity中通过bindService方法绑定对应的service和serviceConnection，同时需要在service中的onBind方法中返回一个Binder对象，这个对象中的方法就可以在Activity中通过serviceConnection被调用
+*   一个service只有在处理停止以及没有和任何Activity绑定的情况下才能被销毁。后台运行的service可能被销毁，此时可以使用前台service（带有状态栏显示，和notification对象绑定，优先级更高），或者把onStartCommand方法的返回值设置为start_redeliver_intent（被杀死后会重启service），而不是start_not_sticky（被杀死后被关闭）。可以使用定时器AlarmManager延迟并循环起调service，或者通过两个service互相起调
