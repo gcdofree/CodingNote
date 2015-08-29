@@ -27,6 +27,7 @@
 		*	[Sort a scrambled itinerary](#sortticket)
 		*	[Cube IV](#cube-iv)
 		*	[Itz Chess](#itzchess)
+		*	[Card Game](#cardgame)
 
 <h4 id="leetcode">Leetcode</h4>
 
@@ -1625,5 +1626,83 @@ Round D
 		return 0;
 	}
 
+---
+
+<h6 id="cardgame">Card Game</h6>
+
+*	Name: Card Game
+*	Problem:  给出若干卡片，每个卡片上有数字，要求对满足c2 - c1 = c3 - c2 = k的连续三张卡片进行消除，求最后剩下的最少卡片数量
+*	Link: https://code.google.com/codejam/contest/4214486/dashboard#s=p2
+
+思路：利用动态规划，dp[i][j]代表从卡片i到j经过删除后的最少卡片数量。如果保留第一张卡片，就是dp[i][j] = dp[i+1][j]+1；如果删除第一张，就寻找后续卡片中是否有满足条件的其他两张ii和iii，同时这三张卡片的空隙dp[i+1][ii-1] == 0和dp[ii+1][iii-1] == 0，就是dp[i][j] = 0 + dp[iii+1][j]
+
+代码
+
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+	#include <vector>
+	#include <algorithm>
+	
+	using namespace std;
+	
+	int getBestNum(vector<int> &data, int k, vector<vector<int>> &dp, int i, int j) {
+		if (j - i < 2) {
+			dp[i][j] = j - i + 1;
+			return j - i + 1;
+		}
+		if (dp[i][j] != -1)
+			return dp[i][j];
+		int result = getBestNum(data, k, dp, i+1, j)+1;
+		for (int ii = i + 1; ii < j; ii++) {
+			if (data[ii] - data[i] == k) {
+				for (int iii = ii + 1; iii <= j; iii++) {
+					if (data[iii] - data[ii] == k) {
+	
+						int gap1 = 0, gap2 = 0;
+						if (ii > i + 1)
+							gap1 = getBestNum(data, k, dp, i + 1, ii - 1);
+						if (iii > ii + 1)
+							gap2 = getBestNum(data, k, dp, ii + 1, iii - 1);
+	
+						if (gap1 == 0 && gap2 == 0) {
+							if (iii == j)
+								result = 0;
+							else
+								result = min(result, getBestNum(data, k, dp, iii + 1, j));
+						}
+					}
+				}
+			}
+		}
+		dp[i][j] = result;
+		return result;
+	}
+	
+	int main() {
+	
+		// open file
+		ifstream inputFile("C-large-practice.in");
+		ofstream outputFile("output");
+	
+		int caseNum;
+		inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+			int num, k;
+			inputFile >> num >> k;
+			vector<vector<int>> dp(num, vector<int>(num, -1));
+			vector<int> data(num, 0);
+			for (int i = 0; i < num; i++) {
+				inputFile >> data[i];
+			}
+			int result = getBestNum(data, k, dp, 0, num-1);
+			outputFile << "Case #" << caseIndex << ": " << result << endl;
+		}
+		inputFile.close();
+		outputFile.close();
+		return 0;
+	}
 
 ---
