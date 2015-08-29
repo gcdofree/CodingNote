@@ -124,7 +124,8 @@ Toast 无法自定义duration，只能是LENGTH_SHORT或者LENGTH_LONG
 
 <h4 id="broadcastreceiver">Android中BroadcastReceiver</h4>
 
-Android实现开机启动时，需要定义一个BroadcastReceiver，用来接受开机完成的广播，同时也要申请对应的权限。在自定义的BroadcastReceiver的onReceive方法中，就可以启调对应的Activity（context.startActivity）或者Service（context.startService）。首次安装应用后需要打开应用激活，才能在下一开机时自启动
+*   BroadcastReceiver在执行完onReceive方法之后，就会被销毁
+*   Android实现开机启动时，需要定义一个BroadcastReceiver，用来接受开机完成的广播，同时也要申请对应的权限。在自定义的BroadcastReceiver的onReceive方法中，就可以启调对应的Activity（context.startActivity）或者Service（context.startService）。首次安装应用后需要打开应用激活，才能在下一开机时自启动
 
 <h4 id="service">Android中Service</h4>
 
