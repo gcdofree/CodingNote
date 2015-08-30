@@ -46,7 +46,8 @@ Android开发整理
 *   多使用lint工具优化代码
 *   如果Android程序（包含资源）需要导出jar包，可以首先生成apk，然后把apk复制到assets文件夹下（仅保留apk中的res文件夹和Android     Manifest），然后再打包（打包时不包含res文件夹）
 *   dp 密度无关像素，无论屏幕密度如何，都可以得到同样尺寸；sp 缩放无关像素，常用于字体大小（和系统设置的字体大小一致）
-*   Android中调用外部动态链接库（.so文件, shared object）时，方法为System.loadLibrary("test") 对应查找的文件为libtest.so
+*   Android中调用外部动态链接库（.so文件, shared object）时，方法为System.loadLibrary("test") 对应查找的文件为libtest.so。。Java通过JNI和其他语言（C++）的动态库进行交互，首先声明native方法，如public native void getNum() 然后生成class文件，再生成对应的.h头文件，然后包含头文件并用C++实现方法，最后生成.so动态库。在用C++实现时，需要引入jni.h头文件，同时传入的参数为jboolean, jintArray, jobject，通过jniEnv进行处理
+
 
 <h4 id="system">Android系统知识</h4>
 Android开机加电引导流程，分为6个步骤
