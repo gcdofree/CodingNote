@@ -14,6 +14,7 @@ Android开发整理
 *	[Android中线程相关](#thread)
 *	[Android中BroadcastReceiver](#broadcastreceiver)
 *	[Android中Service](#service)
+*	[Android中音频播放](#audio)
 
 <h4 id="permission">Android常用权限说明</h4>
 
@@ -134,3 +135,7 @@ Toast 无法自定义duration，只能是LENGTH_SHORT或者LENGTH_LONG
 *   Service运行在主线程中，所以如果直接执行耗时操作，程序会无响应（可以在service中开启子线程）。Service的生命周期包括onCreate，onStartCommand，onDestroy。通过Intent intent = new Intent(this, MyService.class); startService(intent);来启动/结束service。onCreate方法只在Service被创建时调用，onStartCommand方法在每次开启service的时候都会被调用
 *   Activity中可以的service通信，包括绑定和解绑service。在Activity中通过bindService方法绑定对应的service和serviceConnection，同时需要在service中的onBind方法中返回一个Binder对象，这个对象中的方法就可以在Activity中通过serviceConnection被调用
 *   一个service只有在处理停止以及没有和任何Activity绑定的情况下才能被销毁。后台运行的service可能被销毁，此时可以使用前台service（带有状态栏显示，和notification对象绑定，优先级更高），或者把onStartCommand方法的返回值设置为start_redeliver_intent（被杀死后会重启service），而不是start_not_sticky（被杀死后被关闭）。可以使用定时器AlarmManager延迟并循环起调service，或者通过两个service互相起调
+
+<h4 id="audio">Android中音频播放</h4>
+
+在播放音乐时（MediaPlayer），有来电的话，需要停止播放音乐，并播放来电铃声。传统做法是获取来电的broadcast，然后进行相关处理，但是这个方法需要监听通话状态权限，并且只能针对来电进行处理。正确的做法是监听音频焦点（Audio Focus，监听器是OnAudioFocusChangedListener）。音频播放有很多流，如音乐流，电话声音流，播放音乐之前获取对应流的Audio Focus，结束播放时需要取消音频焦点。在播放时，如果监听到音频焦点丢失/重新获取，就可以暂停/继续播放音乐。当来电时，音频焦点从音乐流给到铃声流
