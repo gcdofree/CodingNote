@@ -9,6 +9,7 @@
 *	[适配器模式](#adaptor)
 *	[观察者模式](#observer)
 *	[组合模式](#composite)
+*	[迭代器模式](#iterator)
 
 <h4 id="factory">工厂模式</h4>
 
@@ -85,5 +86,18 @@
                <TextView />（第二层）
           </RelativeLayout>
      </RelativeLayout>
+
+---
+
+<h4 id="iterator">迭代器模式</h4>
+
+定义：迭代器模式：提供一种方法访问容器中的每个元素，而又不会暴露内部细节
+
+示例：Java容器的迭代器，STL中容器的迭代器
+
+    Iterator it = arrayList.iterator();
+    while(it.hasNext()) {
+         String str = (String)it.next();
+    }
 
 ---
