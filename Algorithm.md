@@ -86,6 +86,11 @@
 		return a < b ;
 	}
 	
+	bool comp( const Person &a , const Person &b) {
+      return a.age < b.age ;
+	}
+
+	
 sort 数据量大时用快排Quick Sort，数据量小时用插入排序Insertion Sort，如果递归层次过深，则改用堆排序Heap Sort
 
 #### 查找数组中的元素时，可以先排序，再用二分查找
