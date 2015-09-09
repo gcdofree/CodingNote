@@ -9,6 +9,7 @@
 	*	[Meeting Rooms](#meetingrooms)
 	*	[Meeting Rooms II](#meetingrooms2)
 	*	[Shortest Word Distance](#shortestworddistance)
+	*	[Shortest Word Distance II](#shortestworddistance2)
 *	[Google Code Jam](#googlecodejam)
 	*	[Google APAC 2016 University Graduates Test](#google-apac-2016-university-graduates-test)
 		*	[Bad Horse](#badhorse)
@@ -183,6 +184,34 @@ You may assume that word1 does not equal to word2, and word1 and word2 are both 
             if (index1 != -1 && index2 != -1)
                 dist = min(dist, abs(index1 - index2));
         }
+        return dist;
+    }
+
+---
+
+<h5 id="shortestworddistance2">Shortest Word Distance II</h5>
+
+This is a follow up of Shortest Word Distance. The only difference is now you are given the list of words and your method will be called repeatedly many times with different parameters. How would you optimize it?
+
+思路：依次遍历数组，通过hashMap<string, index>记录下每个单词的位置，最后再查询，时间复杂度O(n)，空间复杂度O(n)
+        
+代码
+
+	unordered_map<string, int> map;
+
+    public WordDistance(vector<string>& words) {
+        for (int i = 0; i < words.length; i++)
+            map[words[i]] = i;
+    }
+
+    public int shortest(string word1, string word2) {
+    	int index1 = -1, index2 = -1, dist = INT_MAX;
+    	if (map.find(word1) != map.end())
+    		index1 = map[word1];
+    	if (map.find(word2) != map.end())
+    		index2 = map[word2];
+		if (index1 != -1 && index2 != -1)
+        	dist = min(dist, abs(index1 - index2));
         return dist;
     }
 
