@@ -10,6 +10,7 @@
 *	[观察者模式](#observer)
 *	[组合模式](#composite)
 *	[迭代器模式](#iterator)
+*	[原型模式](#prototype)
 
 <h4 id="factory">工厂模式</h4>
 
@@ -101,3 +102,12 @@
     }
 
 ---
+
+<h4 id="prototype">原型模式</h4>
+
+定义：原型模式：对于已有的对象，希望生成该对象的一个副本，于是通过拷贝（克隆）根据原型生成新的对象。拷贝可以是浅拷贝或是深拷贝，java中深拷贝必须重写clone方法（必须实现Cloneable接口）
+
+示例：
+
+    A a = new A();
+    A b = (A)a.clone();
