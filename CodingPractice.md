@@ -10,6 +10,7 @@
 	*	[Meeting Rooms II](#meetingrooms2)
 	*	[Shortest Word Distance](#shortestworddistance)
 	*	[Shortest Word Distance II](#shortestworddistance2)
+	*	[Shortest Word Distance III](#shortestworddistance3)
 *	[Google Code Jam](#googlecodejam)
 	*	[Google APAC 2016 University Graduates Test](#google-apac-2016-university-graduates-test)
 		*	[Bad Horse](#badhorse)
@@ -212,6 +213,39 @@ This is a follow up of Shortest Word Distance. The only difference is now you ar
     		index2 = map[word2];
 		if (index1 != -1 && index2 != -1)
         	dist = min(dist, abs(index1 - index2));
+        return dist;
+    }
+
+---
+
+<h5 id="shortestworddistance3">Shortest Word Distance III</h5>
+
+Given a list of words and two words word1 and word2, return the shortest distance between these two words in the list.
+word1 and word2 may be the same and they represent two individual words in the list.
+For example,
+Assume that words = ["practice", "makes", "perfect", "coding", "makes"].
+Given word1 = "makes", word2 = "coding", return 1. Given word1 = "makes", word2 = "makes", return 3.
+
+思路：依次遍历数组，通过hashMap<string, vector<int>>记录下每个单词的位置，最后再查询，求出最短距离，时间复杂度O(n)，空间复杂度O(n)
+        
+代码
+
+	int shortestDistance(vector<string>& words, string word1, string word2) {
+        int size = words.size(), index1 = -1, index2 = -1, dist = INT_MAX;
+        unordered_map<string, vector<int>> map;
+        for (int i = 0; i < size; i++) {
+			if (map.find(words[i]) == map.end()) {
+				vector<int> wordIndex;
+				wordIndex.push_back(i);
+				map[words[i]] = wordIndex;
+			}else
+				map[words[i]].push_back(i);
+        }
+        vector<int> tmp1 = map[word1], tmp2 = map[word2];
+        for (int index1 : tmp1)
+        	for (int index2 : tmp2)
+        		if (index1 != index2)
+        			dist = min(dist, abs(index1 - index2));
         return dist;
     }
 
