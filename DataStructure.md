@@ -60,6 +60,14 @@
         }
         sort(data.begin(), data.end(), comp); // 函数指针
         sort(data.begin(), data.end(), greater<int>()); // 仿函数
+        
+*   模板和宏定义的区别：
+
+    模板在编译时有类型检查，更加安全
+    宏定义不能递归调用，模板可以，如#define poi(x) poi(x)+1报错
+    宏定义可能会导致变量异常，如#define min(n, m) ((n) < (m) ? (n) : (m))，调用min(a++, b)，a被加了两次
+    宏定义可以用于条件编译#ifdef _DEBUG
+    C++中可以用常量代替宏定义的常量，可以用内联函数代替较短的宏定义的短函数
 
 ---
 
