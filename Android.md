@@ -15,6 +15,7 @@ Android开发整理
 *	[Android中BroadcastReceiver](#broadcastreceiver)
 *	[Android中Service](#service)
 *	[Android中音频播放](#audio)
+*	[Android中数据结构](#datastructure)
 
 <h4 id="permission">Android常用权限说明</h4>
 
@@ -139,3 +140,8 @@ Toast 无法自定义duration，只能是LENGTH_SHORT或者LENGTH_LONG
 <h4 id="audio">Android中音频播放</h4>
 
 在播放音乐时（MediaPlayer），有来电的话，需要停止播放音乐，并播放来电铃声。传统做法是获取来电的broadcast，然后进行相关处理，但是这个方法需要监听通话状态权限，并且只能针对来电进行处理。正确的做法是监听音频焦点（Audio Focus，监听器是OnAudioFocusChangedListener）。音频播放有很多流，如音乐流，电话声音流，播放音乐之前获取对应流的Audio Focus，结束播放时需要取消音频焦点。在播放时，如果监听到音频焦点丢失/重新获取，就可以暂停/继续播放音乐。当来电时，音频焦点从音乐流给到铃声流
+
+<h4 id="datastructure">Android中数据结构</h4>
+
+SparseArray 稀疏数组
+*   Android4.0支持，用来代替hashMap<Integer, Object>这一类型，优势是内存消耗少。SparseArray类似于稀疏矩阵，用两个数组来存储key（int）和value（object），通过二分搜索来查找key，比hashMap结构简单，不需要对key和value进行auto-boxing（将原始类型封装为对象类型，如int转Integer），不需要Entry<key, value>的数据结构，因此更省内存，但是数据查找速度较慢，因此适合小规模数据。SparseArray有延迟删除（对删除的key和object不是立即删除，而是先标记，后续如果需要再删除），降低删除的开销
