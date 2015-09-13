@@ -61,13 +61,22 @@
         sort(data.begin(), data.end(), comp); // 函数指针
         sort(data.begin(), data.end(), greater<int>()); // 仿函数
         
-*   模板和宏定义的区别：
+模板和宏定义的区别：
 
-    模板在编译时有类型检查，更加安全
-    宏定义不能递归调用，模板可以，如#define poi(x) poi(x)+1报错
-    宏定义可能会导致变量异常，如#define min(n, m) ((n) < (m) ? (n) : (m))，调用min(a++, b)，a被加了两次
-    宏定义可以用于条件编译#ifdef _DEBUG
-    C++中可以用常量代替宏定义的常量，可以用内联函数代替较短的宏定义的短函数
+*   模板在编译时有类型检查，更加安全
+    
+*   宏定义不能递归调用，模板可以，如#define poi(x) poi(x)+1报错
+    
+*   宏定义可能会导致变量异常，如#define min(n, m) ((n) < (m) ? (n) : (m))，调用min(a++, b)，a被加了两次
+    
+*   宏定义可以用于条件编译#ifdef _DEBUG
+    
+*   C++中可以用常量代替宏定义的常量，可以用内联函数代替较短的宏定义的短函数
+    
+Java中泛型和C++模板的区别：
+*   Java中泛型不能是基础类型，必须是对象（代码擦除的存在，基础类型和object没有继承关系），通过autoboxing和unboxing机制在基础类型和类类型之间转换；C++中模板可以是任意类型
+*   C++模板是code specialization，在实例化一个泛型类或泛型方法时都产生一份新的目标代码，如vector<int>和vector<string>两份不同代码，从而产生模板代码膨胀；Java中泛型是Code sharing，对每个泛型类只生成唯一的一份目标代码；该泛型类的所有实例都映射到这份目标代码上（String, Integer都会转成Object），在需要的时候执行类型检查和类型转换，所以不会造成代码膨胀
+*   C++模板有template关键字，java中泛型没有
 
 ---
 
