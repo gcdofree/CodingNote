@@ -48,16 +48,18 @@ TCP和UDP不同点：
 *	面向连接（需要三次握手）
 *	TCP是流模式协议（Transmission Control Protocol），UDP是数据报模式协议（User Datagram Protocol）
 
-TCP建立连接的三次握手的顺序是
+TCP建立连接的三次握手顺序是
 *	SYN（客户端->服务器，客户端进入SYN_SENT）
 *	SYN+ACK（服务器->客户端，服务器进入SYN_RCVD）
 *	ACK（客户端->服务器，均进入ESTABLISHED）
+*	对应的函数调用：服务器先调用listen，客户端调用connect，服务端accept，客户端write，服务端read
 
-TCP释放链接时的顺序是
+TCP释放连接的四次挥手顺序是
 *	FIN（客户端->服务器，客户端进入FIN_WAIT_1）
 *	ACK（服务器->客户端，服务器进入CLOSE_WAIT，客户端进入FIN_WAIT_2）
 *	FIN+ACK（服务器->客户端，服务器进入LAST_ACK）
 *	ACK（客户端->服务器，客户端进入TIME_WAIT，然后均为CLOSED）
+*	对应的函数调用：客户端close，服务端close
 
 get 和 post 的区别
 *   get是从服务器获取数据，post是向服务器发送数据
