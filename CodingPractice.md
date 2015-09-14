@@ -12,6 +12,8 @@
 	*	[Shortest Word Distance II](#shortestworddistance2)
 	*	[Shortest Word Distance III](#shortestworddistance3)
 	*	[Find the Celebrity](#findthecelebrity)
+	*	[Closest Binary Search Tree Value](#closestbinarysearchtreevalue)
+	*	[Closest Binary Search Tree Value II](#closestbinarysearchtreevalue2)
 *	[Google Code Jam](#googlecodejam)
 	*	[Google APAC 2016 University Graduates Test](#google-apac-2016-university-graduates-test)
 		*	[Bad Horse](#badhorse)
@@ -280,6 +282,26 @@ Note: There will be exactly one celebrity if he/she is in the party. Return the 
         }
         return l;
     }
+    
+---
+
+<h5 id="closestbinarysearchtreevalue">Closest Binary Search Tree Value</h5>
+
+Suppose you are at a party with n people (labeled from 0 to n - 1) and among them, there may exist one celebrity. The definition of a celebrity is that all the other n - 1people know him/her but he/she does not know any of them.
+
+思路：如果a认识b，说明a不是celebrity；如果a不认识b，说明b不是celebrity。根据这个原则从两边向中间搜索，最后确认即可
+        
+代码
+
+---
+
+<h5 id="closestbinarysearchtreevalue2">Closest Binary Search Tree Value II</h5>
+
+Suppose you are at a party with n people (labeled from 0 to n - 1) and among them, there may exist one celebrity. The definition of a celebrity is that all the other n - 1people know him/her but he/she does not know any of them.
+
+思路：如果a认识b，说明a不是celebrity；如果a不认识b，说明b不是celebrity。根据这个原则从两边向中间搜索，最后确认即可
+        
+代码
 
 ---
 
