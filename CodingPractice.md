@@ -367,7 +367,7 @@ You are guaranteed to have only one unique set of k values in the BST that are c
 
 ---
 
-<h5 id="palindromepermutation">Palindrome Permutation/h5>
+<h5 id="palindromepermutation">Palindrome Permutation</h5>
 
 Given a string, determine if a permutation of the string could form a palindrome.
 
@@ -392,7 +392,7 @@ For example,
 
 ---
 
-<h5 id="palindromepermutation2">Palindrome Permutation II/h5>
+<h5 id="palindromepermutation2">Palindrome Permutation II</h5>
 
 Given a string s, return all the palindromic permutations (without duplicates) of it. Return an empty list if no palindromic permutation could be form.
 
@@ -403,6 +403,40 @@ Given s = "abc", return [].
 思路：首先判断string能否生成回文串，如果能生成，则通过next_permutation函数生成前一半，翻转之后生成后一半（可能需要添加中间位）
         
 代码
+
+	vector<string> generatePalindromes(string s) {
+		vector<string> result;
+		if (s.empty()) return result;
+		unordered_map<char, int> data;
+		int count = 0;
+		for (char c : s) {
+			data[c]++;
+			count += data[c] & 1 ? 1 : -1;
+		}
+		if (count >= 2) return result;
+		char mid;
+		bool odd = false;
+		string half = "";
+		for (auto dataPair : data) {
+			if (dataPair.second & 1) {
+				odd = true;
+				mid = dataPair.first;
+			}
+			half += string(dataPair.second / 2, dataPair.first);
+		}
+		result.push_back(half);
+		while (next_permutation(half.begin(), half.end())) {
+			result.push_back(half);
+		}
+		for (string &temp : result) {
+			string tt = temp;
+			reverse(tt.begin(), tt.end());
+			if (odd)
+				temp += mid;
+			temp += tt;
+		}
+		return result;
+	}
 
 ---
 
