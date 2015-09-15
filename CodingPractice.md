@@ -14,6 +14,8 @@
 	*	[Find the Celebrity](#findthecelebrity)
 	*	[Closest Binary Search Tree Value](#closestbinarysearchtreevalue)
 	*	[Closest Binary Search Tree Value II](#closestbinarysearchtreevalue2)
+	*	[Palindrome Permutation](#palindromepermutation)
+	*	[Palindrome Permutation II](#palindromepermutation2)
 *	[Google Code Jam](#googlecodejam)
 	*	[Google APAC 2016 University Graduates Test](#google-apac-2016-university-graduates-test)
 		*	[Bad Horse](#badhorse)
@@ -362,6 +364,33 @@ You are guaranteed to have only one unique set of k values in the BST that are c
 		s.push(root->val);
 		visitTree(second, target, s, reverse);
 	}
+
+---
+
+<h5 id="palindromepermutation">Palindrome Permutation/h5>
+
+Given a string, determine if a permutation of the string could form a palindrome.
+
+For example,
+"code" -> False, "aab" -> True, "carerac" -> True.
+
+思路：记录每个字符出现的次数，如果奇数次的个数小于两次，则说明能够形成回文串。可以通过hashMap记录次数，也可以用256位数组，也可以用bitset
+        
+代码
+
+---
+
+<h5 id="palindromepermutation2">Palindrome Permutation II/h5>
+
+Given a string s, return all the palindromic permutations (without duplicates) of it. Return an empty list if no palindromic permutation could be form.
+
+For example:
+Given s = "aabb", return ["abba", "baab"].
+Given s = "abc", return [].
+
+思路：首先判断string能否生成回文串，如果能生成，则通过next_permutation函数生成前一半，翻转之后生成后一半（可能需要添加中间位）
+        
+代码
 
 ---
 
