@@ -378,6 +378,18 @@ For example,
         
 代码
 
+	bool canPermutePalindrome(string s) {
+		if (s.empty()) return false;
+		vector<int> data(256, 0);
+		int count = 0;
+		for (char c : s) {
+			data[c]++;
+			// 如果是奇数，加一；偶数，减一。最终结果如果有0或1个奇数，则可以生成回文串
+			count += data[c] & 1 ? 1 : -1;
+		}
+		return count < 2;
+	}
+
 ---
 
 <h5 id="palindromepermutation2">Palindrome Permutation II/h5>
