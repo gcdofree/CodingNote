@@ -316,6 +316,53 @@ You are guaranteed to have only one unique set of k values in the BST that are c
         
 代码
 
+	vector<int> closestValue(TreeNode* root, double target, int k) {
+		vector<int> result(k, 0);
+		stack<int> s1, s2;
+		visitTree(root, target, s1, false);
+		visitTree(root, target, s2, true);
+		int index = 0;
+		while (index < k) {
+			if (s1.empty()) {
+				result[index] = s2.top();
+				s2.pop();
+			}
+			else if (s2.empty()) {
+				result[index] = s1.top();
+				s1.pop();
+			}
+			else{
+				int num1 = s1.top();
+				int num2 = s2.top();
+				if (target - num1 > num2 - target) {
+					s2.pop();
+					result[index] = num2;
+				}
+				else {
+					s1.pop();
+					result[index] = num1;
+				}
+			}
+			index++;
+		}
+		return result;
+	}
+
+	void visitTree(TreeNode* root, double target, stack<int> &s, bool reverse) {
+		if (!root) return;
+		TreeNode *first = root->left, *second = root->right;
+		if (reverse) {
+			first = root->right;
+			second = root->left;
+		}
+		visitTree(first, target, s, reverse);
+		// stop here
+		if (root->val > target && !reverse || root->val <= target && reverse)
+			return;
+		s.push(root->val);
+		visitTree(second, target, s, reverse);
+	}
+
 ---
 
 <h4 id="googlecodejam">Google Code Jam</h4>
