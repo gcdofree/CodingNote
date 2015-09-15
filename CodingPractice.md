@@ -287,19 +287,32 @@ Note: There will be exactly one celebrity if he/she is in the party. Return the 
 
 <h5 id="closestbinarysearchtreevalue">Closest Binary Search Tree Value</h5>
 
-Suppose you are at a party with n people (labeled from 0 to n - 1) and among them, there may exist one celebrity. The definition of a celebrity is that all the other n - 1people know him/her but he/she does not know any of them.
+Given a non-empty binary search tree and a target value (float), find the value in the BST that is closest to the target.
 
-思路：如果a认识b，说明a不是celebrity；如果a不认识b，说明b不是celebrity。根据这个原则从两边向中间搜索，最后确认即可
+思路：按照BST的搜索顺序依次向下搜索即可
         
 代码
+
+	int closestValue(TreeNode* root, double target) {
+		int val = root->val;
+		TreeNode *next = val > target ? root->left : root->right;
+		if (!next)
+			return val;
+		int childVal = closestValue(next, target);
+		return abs(val - target) > abs(childVal - target) ? childVal : val;
+	}
 
 ---
 
 <h5 id="closestbinarysearchtreevalue2">Closest Binary Search Tree Value II</h5>
 
-Suppose you are at a party with n people (labeled from 0 to n - 1) and among them, there may exist one celebrity. The definition of a celebrity is that all the other n - 1people know him/her but he/she does not know any of them.
+Given a non-empty binary search tree and a target value, find k values in the BST that are closest to the target.
 
-思路：如果a认识b，说明a不是celebrity；如果a不认识b，说明b不是celebrity。根据这个原则从两边向中间搜索，最后确认即可
+Given target value is a floating point.
+You may assume k is always valid, that is: k ≤ total nodes.
+You are guaranteed to have only one unique set of k values in the BST that are closest to the target.
+
+思路：由于BST的中序遍历（左中右）的结果是从小到大排序的，逆序的中序遍历（右中左）结果是从大到小排列的，所以创建两个栈，一个栈放中序遍历结果（比target小），一个栈放逆序的中序遍历结果（比target大），然后依次比较两个栈的数值即可找到k个最相近的元素
         
 代码
 
