@@ -16,6 +16,7 @@
 	*	[Closest Binary Search Tree Value II](#closestbinarysearchtreevalue2)
 	*	[Palindrome Permutation](#palindromepermutation)
 	*	[Palindrome Permutation II](#palindromepermutation2)
+	*	[Verify Preorder Sequence in Binary Search Tree](#verifypreordersequenceinbinarysearchtree)
 *	[Google Code Jam](#googlecodejam)
 	*	[Google APAC 2016 University Graduates Test](#google-apac-2016-university-graduates-test)
 		*	[Bad Horse](#badhorse)
@@ -436,6 +437,34 @@ Given s = "abc", return [].
 			temp += tt;
 		}
 		return result;
+	}
+
+---
+
+<h5 id="verifypreordersequenceinbinarysearchtree">Verify Preorder Sequence in Binary Search Tree</h5>
+
+Given an array of numbers, verify whether it is the correct preorder traversal sequence of a binary search tree.
+
+You may assume each number in the sequence is unique.
+
+思路：首先还原出中序遍历的结果，即从小到大排列，如果发现有这个排列中有小于前面数据的，就返回false。需要一个stack来存储前序节点，一个vector存储中序遍历结果
+        
+代码
+
+	bool verifyPreorder(vector<int> &preorder) {
+		if (preorder.empty()) return false;
+		stack<int> s;
+		vector<int> inorder;
+		for (int num : preorder) {
+			if (!inorder.empty() && num < inorder.back())
+				return false;
+			while (!s.empty() && num > s.top()) {
+				inorder.push_back(s.top());
+				s.pop();
+			}
+			s.push(num);
+		}
+		return true;
 	}
 
 ---
