@@ -17,6 +17,7 @@
 	*	[Palindrome Permutation](#palindromepermutation)
 	*	[Palindrome Permutation II](#palindromepermutation2)
 	*	[Verify Preorder Sequence in Binary Search Tree](#verifypreordersequenceinbinarysearchtree)
+	*	[One Edit Distance](#oneeditdistance)
 *	[Google Code Jam](#googlecodejam)
 	*	[Google APAC 2016 University Graduates Test](#google-apac-2016-university-graduates-test)
 		*	[Bad Horse](#badhorse)
@@ -465,6 +466,40 @@ You may assume each number in the sequence is unique.
 			s.push(num);
 		}
 		return true;
+	}
+
+---
+
+<h5 id="oneeditdistance">One Edit Distance</h5>
+
+Given two strings S and T, determine if they are both one edit distance apart.
+
+Hint:
+1. If | n – m | is greater than 1, we know immediately both are not one-edit distance apart.
+2. It might help if you consider these cases separately, m == n and m ≠ n.
+3. Assume that m is always ≤ n, which greatly simplifies the conditional statements. If m > n, we could just simply swap S and T.
+4. If m == n, it becomes finding if there is exactly one modified operation. If m ≠ n, you do not have to consider the delete operation. Just consider the insert operation in T.
+
+思路：题目要求判断两个字符串之间的差距是否为1，则有两种情况:需要插入一个字符（中间或结尾）；需要修改一个字符（两个字符串等长）
+        
+代码
+
+	bool isOneEditDistance(string s, string t) {
+		int m = s.size(), n = t.size();
+		if (m > n)
+			return isOneEditDistance(t, s);
+		if (n - m > 1)
+			return false;
+		bool misMatch = false;
+		for (int i = 0, j = 0; i < m; i++, j++) {
+			if (s[i] != t[j]) {
+				if (misMatch) return false;
+				misMatch = true;
+				if (n > m)
+					i--;
+			}
+		}
+		return (misMatch || n > m); // 如果t前面和s相同，最后一个字符不同，则misMatch为false
 	}
 
 ---
