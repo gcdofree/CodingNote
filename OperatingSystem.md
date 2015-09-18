@@ -61,6 +61,8 @@ TCP释放连接的四次挥手顺序是
 *	ACK（客户端->服务器，客户端进入TIME_WAIT，然后均为CLOSED）
 *	对应的函数调用：客户端close，服务端close
 
+UDP协议下，直接建立socket就可以通信，服务器端无需调用listen，accept函数，双方直接connect即可
+
 get 和 post 的区别
 *   get是从服务器获取数据，post是向服务器发送数据
 *   get的参数在url中，用户可见；post的参数在html header中，用户不可见
