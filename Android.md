@@ -121,6 +121,8 @@ startActivity是系统方法，其中intent用来在不同的activity之间通�
 <h4 id="store&IO">Android中存储，读写相关</h4>
 Sharedpreferences 进行保存时，commit是同步写到存储介质上，并返回true or false；apply是异步写到存储介质上，无返回值，效率比commit高
 
+Android中sqlite可以多线程同时读，但不可以多线程同时写。多线程同时读写时，不能每个线程都生成一个sqliteOpenHelper，而应该使用一个单例
+
 <h4 id="message">Android中消息提示相关</h4>
 Toast 无法自定义duration，只能是LENGTH_SHORT或者LENGTH_LONG
 
