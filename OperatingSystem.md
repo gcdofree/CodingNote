@@ -126,6 +126,17 @@ FIFO是命名管道，先进先出；PIPE是匿名管道，适用于有父子关
 
 fork() 会创建一个新进程，返回两次，子进程返回0，父进程返回子进程的id，如 folk() || folk() 共创建3个进程
 
+Java中多线程下wait和sleep的区别（Thread.sleep()和This.wait()）
+*	sleep是Thread类的静态方法，wait是Object类中的方法。两者在调用的时候都会暂停当前线程
+*	sleep不会导致锁行为的改变（因为一般是对象锁，sleep就不是Object的方法），即调用sleep不会释放锁，其他线程无法访问该对象；wait会释放锁，其他线程可以访问对象
+*	wait必须在synchronize block中调用，调用之后只能通过notify方法唤醒
+
+Java中synchronize块
+*	当两个并发线程访问同一个对象object中的这个synchronized(this)同步代码块时，一个时间内只能有一个线程得到执行。另一个线程必须等待当前线程执行完这个代码块以后才能执行该代码块
+*	当一个线程访问object的一个synchronized(this)同步代码块时，另一个线程仍然可以访问该object中的非synchronized(this)同步代码块
+*	当一个线程访问object的一个synchronized(this)同步代码块时，它就获得了这个object的对象锁。其它线程对该object对象所有同步代码部分的访问都被暂时阻塞
+
+
 ---
 
 <h4 id="oop">面向对象编程相关</h4>
