@@ -27,6 +27,7 @@
 		*	[gCube](#gcube)
 		*	[gCampus](#gcampus)
 		*	[gSnake](#gsnake)
+		*	[gRanks](#granks)
 	*	[Google APAC 2015 University Graduates Test](#google-apac-2015-university-graduates-test)
 		*	[Super 2048](#super2048)
 		*	[Addition](#addition)
@@ -1084,6 +1085,112 @@ Round A
 	}
 
 ---
+
+Round C
+
+<h6 id="granks">gRanks</h6>
+
+*	Name: gRanks
+*	Problem: 给出运动员所有的比赛结果，按照规则进行排名
+*	Link: https://code.google.com/codejam/contest/4284487/dashboard#s=p0
+
+思路：按照规则统计积分，最后排序输出即可。
+
+代码
+	
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <fstream>
+	#include <vector>
+	#include <unordered_map>
+	#include <algorithm>
+	
+	using namespace std;
+	
+	struct athlete
+	{
+		string name;
+		int score;
+	};
+	
+	bool comp(const athlete &a1, const athlete &a2) {
+		if (a1.score > a2.score)
+			return true;
+		else if (a1.score < a2.score)
+			return false;
+		else {
+			if (a1.name < a2.name)
+				return true;
+			else
+				return false;
+		}
+	}
+	
+	int main() {
+	
+		// open file
+		ifstream inputFile("A-small-practice.in");
+		ofstream outputFile("output");
+	
+		//cout.precision(10);
+		//outputFile.precision(10);
+	
+		int caseNum;
+		inputFile >> caseNum;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+			unordered_map<string, vector<int>> scoreMap;
+			vector<athlete> finalList;
+			int p;
+			inputFile >> p;
+			vector<int> s(p, 0);
+			for (int i = 0; i < p; i++) {
+				inputFile >> s[i];
+			}
+			int n;
+			inputFile >> n;
+			for (int i = 0; i < n; i++) {
+				int w;
+				inputFile >> w;
+				vector<string> name(p, "");
+				for (int j = 0; j < p; j++) {
+					inputFile >> name[j];
+					scoreMap[name[j]].push_back(w * s[j]);
+				}
+			}
+			int m;
+			inputFile >> m;
+			for (auto tmpMap : scoreMap) {
+				athlete ath;
+				ath.name = tmpMap.first;
+				sort(tmpMap.second.begin(), tmpMap.second.end());
+				int finalScore = 0;
+				int size = tmpMap.second.size();
+				for (int i = 0; i < m && size - i > 0; i++) {
+					finalScore += tmpMap.second[size - i - 1];
+				}
+				ath.score = finalScore;
+				finalList.push_back(ath);
+			}
+			sort(finalList.begin(), finalList.end(), comp);
+			outputFile << "Case #" << caseIndex << ":" << endl;
+			outputFile << "1: " <<finalList[0].name << endl;
+			int lastIndex = 1;
+			for (int i = 1; i < finalList.size(); i++) {
+				if (finalList[i].score == finalList[i - 1].score) {
+					outputFile << lastIndex << ": " << finalList[i].name << endl;
+				}
+				else {
+					outputFile << i + 1 << ": " << finalList[i].name << endl;
+					lastIndex = i + 1;
+				}
+			}
+		}
+		inputFile.close();
+		outputFile.close();
+		return 0;
+	}
 
 ##### Google APAC 2015 University Graduates Test
 
