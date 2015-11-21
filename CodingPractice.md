@@ -1192,6 +1192,8 @@ Round C
 		return 0;
 	}
 
+---
+
 ##### Google APAC 2015 University Graduates Test
 
 Round A
