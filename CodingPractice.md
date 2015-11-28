@@ -1205,82 +1205,82 @@ Round C
 
 代码
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <vector>
-
-using namespace std;
-
-int main() {
-
-	int caseNum;
-	inputFile >> caseNum;
-
-	vector<int> percent;
-	vector<long long> file;
-
-	for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
-		int logNum;
-		inputFile >> logNum;
-		percent.resize(logNum);
-		file.resize(logNum);
-		for (int i = 0; i < logNum; i++) {
-			inputFile >> percent[i];
-			inputFile >> file[i];
-		}
-		long long minFileNum = -1, maxFileNum = 1000000000004239LL;
-		for (int i = 0; i < logNum; i++) {
-			if (file[i] == 0 && percent[i] == 0)
-				continue;
-			if (file[i] == 0 && percent[i] != 0) {
-				outputFile << "Case #" << caseIndex << ": -1" << endl;
-				break;
+	#include <iostream>
+	#include <vector>
+	#include <string>
+	#include <vector>
+	
+	using namespace std;
+	
+	int main() {
+	
+		int caseNum;
+		inputFile >> caseNum;
+	
+		vector<int> percent;
+		vector<long long> file;
+	
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+			int logNum;
+			inputFile >> logNum;
+			percent.resize(logNum);
+			file.resize(logNum);
+			for (int i = 0; i < logNum; i++) {
+				inputFile >> percent[i];
+				inputFile >> file[i];
 			}
-			long long tmpMin, tmpMax;
-			if (percent[i] == 0) { // 只更新最小值
-				tmpMin = file[i] * 100 / (percent[i] + 1) + 1;
-				if (tmpMin > minFileNum)
-					minFileNum = tmpMin;
-			}
-			else if (percent[i] == 100) {
-				if (file[i] <= maxFileNum && file[i] >= minFileNum) {
-					maxFileNum = file[i];
-					minFileNum = file[i];
-				}
-				else {
+			long long minFileNum = -1, maxFileNum = 1000000000004239LL;
+			for (int i = 0; i < logNum; i++) {
+				if (file[i] == 0 && percent[i] == 0)
+					continue;
+				if (file[i] == 0 && percent[i] != 0) {
 					outputFile << "Case #" << caseIndex << ": -1" << endl;
 					break;
 				}
+				long long tmpMin, tmpMax;
+				if (percent[i] == 0) { // 只更新最小值
+					tmpMin = file[i] * 100 / (percent[i] + 1) + 1;
+					if (tmpMin > minFileNum)
+						minFileNum = tmpMin;
+				}
+				else if (percent[i] == 100) {
+					if (file[i] <= maxFileNum && file[i] >= minFileNum) {
+						maxFileNum = file[i];
+						minFileNum = file[i];
+					}
+					else {
+						outputFile << "Case #" << caseIndex << ": -1" << endl;
+						break;
+					}
+				}
+				else { // 更新最小和最大值
+					tmpMax = file[i] * 100 / percent[i];
+					if (tmpMax < maxFileNum)
+						maxFileNum = tmpMax;
+					tmpMin = file[i] * 100 / (percent[i] + 1) + 1;
+					if (tmpMin > minFileNum)
+						minFileNum = tmpMin;
+				}
+	
+				if (maxFileNum == minFileNum && i == logNum - 1) {
+					outputFile << "Case #" << caseIndex << ": " << minFileNum << endl;
+					break;
+				}
+				else if (maxFileNum > minFileNum && i == logNum - 1) {
+					outputFile << "Case #" << caseIndex << ": -1" << endl;
+					break;
+				}
+				else if (minFileNum > maxFileNum) {
+					outputFile << "Case #" << caseIndex << ": -1" << endl;
+					break;
+				}
+	
 			}
-			else { // 更新最小和最大值
-				tmpMax = file[i] * 100 / percent[i];
-				if (tmpMax < maxFileNum)
-					maxFileNum = tmpMax;
-				tmpMin = file[i] * 100 / (percent[i] + 1) + 1;
-				if (tmpMin > minFileNum)
-					minFileNum = tmpMin;
-			}
-
-			if (maxFileNum == minFileNum && i == logNum - 1) {
-				outputFile << "Case #" << caseIndex << ": " << minFileNum << endl;
-				break;
-			}
-			else if (maxFileNum > minFileNum && i == logNum - 1) {
-				outputFile << "Case #" << caseIndex << ": -1" << endl;
-				break;
-			}
-			else if (minFileNum > maxFileNum) {
-				outputFile << "Case #" << caseIndex << ": -1" << endl;
-				break;
-			}
-
 		}
+		inputFile.close();
+		outputFile.close();
+		return 0;
 	}
-	inputFile.close();
-	outputFile.close();
-	return 0;
-}
 
 ---
 
