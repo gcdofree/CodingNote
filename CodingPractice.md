@@ -28,6 +28,7 @@
 		*	[gCampus](#gcampus)
 		*	[gSnake](#gsnake)
 		*	[gRanks](#granks)
+		*	[gFiles](#gfiles)
 	*	[Google APAC 2015 University Graduates Test](#google-apac-2015-university-graduates-test)
 		*	[Super 2048](#super2048)
 		*	[Addition](#addition)
@@ -1191,6 +1192,95 @@ Round C
 		outputFile.close();
 		return 0;
 	}
+
+---
+
+<h6 id="gfiles">gFiles</h6>
+
+*	Name: gFiles
+*	Problem: 给出进度条的百分比和已经传输的文件，计算总文件数量
+*	Link: https://code.google.com/codejam/contest/4284487/dashboard#s=p1
+
+思路：对每一个百分比和已传输文件，计算对应的总文件数量的上限和下限，直到超出范围出现矛盾或者遍历完所有数据为止。需要注意求上限和下限的规则，以及大数据用long long类型来存储
+
+代码
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int main() {
+
+	int caseNum;
+	inputFile >> caseNum;
+
+	vector<int> percent;
+	vector<long long> file;
+
+	for (int caseIndex = 1; caseIndex <= caseNum; caseIndex++) {
+		int logNum;
+		inputFile >> logNum;
+		percent.resize(logNum);
+		file.resize(logNum);
+		for (int i = 0; i < logNum; i++) {
+			inputFile >> percent[i];
+			inputFile >> file[i];
+		}
+		long long minFileNum = -1, maxFileNum = 1000000000004239LL;
+		for (int i = 0; i < logNum; i++) {
+			if (file[i] == 0 && percent[i] == 0)
+				continue;
+			if (file[i] == 0 && percent[i] != 0) {
+				outputFile << "Case #" << caseIndex << ": -1" << endl;
+				break;
+			}
+			long long tmpMin, tmpMax;
+			if (percent[i] == 0) { // 只更新最小值
+				tmpMin = file[i] * 100 / (percent[i] + 1) + 1;
+				if (tmpMin > minFileNum)
+					minFileNum = tmpMin;
+			}
+			else if (percent[i] == 100) {
+				if (file[i] <= maxFileNum && file[i] >= minFileNum) {
+					maxFileNum = file[i];
+					minFileNum = file[i];
+				}
+				else {
+					outputFile << "Case #" << caseIndex << ": -1" << endl;
+					break;
+				}
+			}
+			else { // 更新最小和最大值
+				tmpMax = file[i] * 100 / percent[i];
+				if (tmpMax < maxFileNum)
+					maxFileNum = tmpMax;
+				tmpMin = file[i] * 100 / (percent[i] + 1) + 1;
+				if (tmpMin > minFileNum)
+					minFileNum = tmpMin;
+			}
+
+			if (maxFileNum == minFileNum && i == logNum - 1) {
+				outputFile << "Case #" << caseIndex << ": " << minFileNum << endl;
+				break;
+			}
+			else if (maxFileNum > minFileNum && i == logNum - 1) {
+				outputFile << "Case #" << caseIndex << ": -1" << endl;
+				break;
+			}
+			else if (minFileNum > maxFileNum) {
+				outputFile << "Case #" << caseIndex << ": -1" << endl;
+				break;
+			}
+
+		}
+	}
+	inputFile.close();
+	outputFile.close();
+	return 0;
+}
 
 ---
 
